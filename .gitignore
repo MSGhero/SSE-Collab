@@ -1,0 +1,15 @@
+/.ecs_invalidation
+/.vscode
+/export
+*.pak
+*.png
+*.tps
+*.gif
+*.ogg
+*.mp3
+*.wav
+*.webm
+assets/misc/
+assets/fonts/
+ngapi.txt
+assets/.tmp/

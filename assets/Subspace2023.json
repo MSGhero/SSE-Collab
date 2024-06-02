@@ -1,0 +1,23 @@
+{"enemies" : [
+    {
+      "title": "TowTow",
+      "image": "TowTow",
+      "artist": "TomDoy",
+      "description": "A giant, ramlike enemy and member of the Subspace Army. A Towtow looks adorable while sleeping, but when it's awakened, its angelic face changes dramatically. The features turn to demonic nastiness, and the Towtow's body turns bright red as it readies to ram you. Perhaps a result of its tantrum-hindered fashion sense, the Towtow sports a pompadour when angry.",
+      "profile": "https://tomdoy.newgrounds.com/"
+    },
+    {
+      "title": "Cymul",
+      "image": "Cymul",
+      "artist": "fe3l1ngsk1lled",
+      "description": "First, notice the metallic sheen--a specialized coating that allows the Cymul to reflect beams and other long-range attacks. The reflected attacks are said to be as strong as a Reflector's, so it's believed that the coating is based on Reflector technology. Coating aside, the four blades attached to its body cannot be neglected--they will slice and dice and slice.",
+      "profile": "https://fe3l1ngsk1lledd.newgrounds.com/"
+    },
+    {
+      "title": "Armight",
+      "image": "Armight",
+      "artist": "drag0nfish",
+      "description": "A Subspace enemy. Look at the arms on this thing. It's also got an awfully fancy mustache! Without much of a body, Armight floats softly in the air--all arms, legs, and head. Resplendent in a nice armored helmet, Armight attacks with its arms and swords and will sometimes throw the latter at you unexpectedly.",
+      "profile": "https://drag0nfish.newgrounds.com/"
+    }
+]}
