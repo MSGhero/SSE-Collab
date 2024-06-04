@@ -114,6 +114,7 @@ class Mono extends AMono {
 		var sprites = new Spritesheet();
 		sprites.loadSingle(Res.load("sprites/Cymul.png").toImage(), "cymul"); // iterate json or something
 		sprites.loadSingle(Res.load("sprites/Buckot.png").toImage(), "buckot");
+		sprites.loadTexturePackerData(Res.load("sprites/sprites.png").toImage(), Res.load("sprites/sprites.txt").toText());
 		
 		if (ngMedals) ecs.setResources(NG.core);
 		

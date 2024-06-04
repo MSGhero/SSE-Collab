@@ -1,17 +1,15 @@
 package states;
 
+import mono.timing.FloatTweener;
+import h3d.shader.UVScroll;
 import IDs.StateID;
 import mono.state.StateCommand;
 import ecs.Entity;
 import h2d.Video;
-import mono.audio.AudioCommand;
-import mono.input.Input;
-import haxe.ds.StringMap;
 import IDs.InputID;
 import mono.input.InputCommand;
 import mono.timing.Timing;
 import mono.timing.TimingCommand;
-import proto.Proto;
 import IDs.LayerID;
 import IDs.ParentID;
 import mono.graphics.DisplayListCommand;
@@ -24,6 +22,7 @@ class LogoState extends State {
 	
 	var video:Video;
 	var bm:Bitmap;
+	var bg:Bitmap;
 	var awaitingInput:Bool;
 	
 	var entity:Entity;
@@ -47,26 +46,31 @@ class LogoState extends State {
 		
 		entity = ecs.createEntity();
 		bm = new Bitmap(Res.load("logo/LOGO (FULL).png").toTile());
+		bg = new Bitmap(Res.load("logo/BACKGROUND 1.png").toTile());
+		bg.addShader(new UVScroll(0.1, 0));
+		bg.tileWrap = true;
 		
 		#if js
 		video = new Video();
 		video.loadFile("Logo_Animation.webm", () -> {
-			// play audio
-			// etc
-			awaitingInput = true;
+			
+			video.setScale(1 / 2.25);
+			video.onEnd = onVideoEnd;
+			
+			Command.queueMany(
+				ADD_TO(video, S2D, FG),
+				AudioCommand.PLAY(Res.load("sfx/LOGO.ogg").toSound(), {
+					type : SFX
+				})
+			);
 		});
-		
-		Command.queueMany(
-			ADD_TO(video, S2D, FG)
-		);
 		
 		awaitingInput = false;
 		#else
-		awaitingInput = true;
+		onVideoEnd();
 		#end
 		
 		Command.queueMany(
-			ADD_TO(bm, S2D, BG),
 			ADD_UPDATER(entity, Timing.every(1 / 60, update))
 		);
 	}
@@ -75,6 +79,9 @@ class LogoState extends State {
 		super.exit();
 		
 		ecs.deleteEntity(entity);
+		bm.remove();
+		bg.remove();
+		if (video != null) video.remove();
 	}
 	
 	function update() {
@@ -86,11 +93,28 @@ class LogoState extends State {
 				if (actions.justPressed.SELECT) {
 					awaitingInput = false;
 					Command.queueMany(
-						EXIT(PRELOAD_STATE),
+						EXIT(LOGO_STATE),
 						ENTER(CREATURE_STATE)
 					);
 				}
 			}));
 		}
+		
+		
+	}
+	
+	function onVideoEnd() {
+		
+		if (video != null) video.remove();
+		
+		Command.queueMany(
+			ADD_TO(bm, S2D, FG),
+			ADD_TO(bg, S2D, BG),
+			ADD_UPDATER(entity, new FloatTweener(0.75, 0, 1, f -> {
+				bm.alpha = bg.alpha = f;
+			}))
+		);
+		
+		awaitingInput = true;
 	}
 }

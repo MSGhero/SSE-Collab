@@ -7,6 +7,7 @@
 
 -lib heaps
 -lib hlsdl
+-lib hlopenal
 -lib ecs
 -lib mono2D
 -lib json2object

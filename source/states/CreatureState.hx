@@ -1,5 +1,6 @@
 package states;
 
+import mono.animation.AnimRangeParser;
 import mono.audio.AudioCommand;
 import mono.input.Input;
 import haxe.ds.StringMap;
@@ -23,6 +24,8 @@ class CreatureState extends State {
 	var creatures:Array<String>;
 	var creatureIndex:Int;
 	
+	var trophy:Proto;
+	
 	public function init() {
 		
 		creatures = ["cymul", "buckot"];
@@ -45,6 +48,18 @@ class CreatureState extends State {
 		
 		creatureIndex = 0;
 		
+		trophy = new Proto(ecs.createEntity());
+		trophy.createSprite(S2D, FG);
+		trophy.createAnim([
+			{
+				name : "default",
+				frameNames : AnimRangeParser.parseRanges(["trophy/0000-0051"]),
+				loop : true,
+				fps : 20
+			}
+		]);
+		// trophy.add(ecs);
+		
 		creature = new Proto(ecs.createEntity());
 		creature.createSprite(S2D, FG);
 		creature.createAnim([
@@ -61,16 +76,17 @@ class CreatureState extends State {
 		], creatures[creatureIndex]);
 		creature.add(ecs);
 		creature.sprite.scale(0.5);
+		creature.sprite.x = 275;
+		creature.sprite.y = 90;
 		
 		Command.queueMany(
 			DisplayListCommand.ADD_TO(bg, ParentID.S2D, LayerID.BG),
 			TimingCommand.ADD_UPDATER(ecs.createEntity(), Timing.every(1 / 60, update)),
-			/*
 			AudioCommand.PLAY(Res.load("music/Trophy_Gallery.ogg").toSound(), {
 				type : MUSIC,
-				loop : true
+				loop : true,
+				volume : 1.0
 			})
-			*/
 		);
 	}
 	
