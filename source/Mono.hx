@@ -1,5 +1,6 @@
 package;
 
+import states.GameState;
 import states.LogoState;
 import states.CreatureState;
 import utils.Pak;
@@ -40,8 +41,6 @@ import mono.input.MouseSystem;
 
 class Mono extends AMono {
 	
-	public static var ecs(default, null):Universe;
-	
 	var loadedIn:Bool;
 	
 	var ngMedals:Bool; // how should this fit into ecs? NG.core as a resource makes sense, but login occurs before ecs init
@@ -56,7 +55,7 @@ class Mono extends AMono {
 		stage.engine.backgroundColor = 0xff000000;
 		
 		// possible that this should go before the preloader
-		ecs = ecsRef = Universe.create({
+		final ecs = ecsRef = Universe.create({
 			entities : 400,
 			phases : [
 				{
@@ -91,6 +90,7 @@ class Mono extends AMono {
 		var mmap = DefaultMappings.getDefaultMouse();
 		input.addDevice(new MouseInput(mmap));
 		
+		var game = new GameState(ecs);
 		var preload = new PreloadState(ecs);
 		var logo = new LogoState(ecs);
 		var creature = new CreatureState(ecs);
@@ -99,10 +99,12 @@ class Mono extends AMono {
 			ADD_PARENT(stage.s2d, S2D),
 			ADD_INPUT(input, MENU),
 			REGISTER_INPUT(ecs.createEntity(), MENU),
+			REGISTER_STATE(game, GAME_STATE),
 			REGISTER_STATE(preload, PRELOAD_STATE),
 			REGISTER_EXIT(PRELOAD_STATE, postInit),
 			REGISTER_STATE(creature, CREATURE_STATE),
 			REGISTER_STATE(logo, LOGO_STATE),
+			ENTER(GAME_STATE),
 			ENTER(PRELOAD_STATE),
 		);
 		
@@ -116,7 +118,7 @@ class Mono extends AMono {
 		sprites.loadSingle(Res.load("sprites/Buckot.png").toImage(), "buckot");
 		sprites.loadTexturePackerData(Res.load("sprites/sprites.png").toImage(), Res.load("sprites/sprites.txt").toText());
 		
-		if (ngMedals) ecs.setResources(NG.core);
+		if (ngMedals) ecsRef.setResources(NG.core);
 		
 		Command.queueMany(
 			ADD_SHEET(sprites, SheetID.SPRITES)

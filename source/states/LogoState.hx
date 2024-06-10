@@ -1,5 +1,6 @@
 package states;
 
+import mono.audio.AudioCommand;
 import mono.timing.FloatTweener;
 import h3d.shader.UVScroll;
 import IDs.StateID;
@@ -59,8 +60,9 @@ class LogoState extends State {
 			
 			Command.queueMany(
 				ADD_TO(video, S2D, FG),
-				AudioCommand.PLAY(Res.load("sfx/LOGO.ogg").toSound(), {
-					type : SFX
+				PLAY(Res.load("sfx/LOGO.ogg").toSound(), {
+					type : SFX,
+					loop : false
 				})
 			);
 		});
@@ -90,7 +92,7 @@ class LogoState extends State {
 			Command.now(RAW_INPUT(si -> {
 				final actions = si.get(MENU);
 				
-				if (actions.justPressed.SELECT) {
+				if (actions.justPressed.SELECT || actions.justPressed.OPEN) {
 					awaitingInput = false;
 					Command.queueMany(
 						EXIT(LOGO_STATE),
@@ -99,8 +101,6 @@ class LogoState extends State {
 				}
 			}));
 		}
-		
-		
 	}
 	
 	function onVideoEnd() {

@@ -26,6 +26,7 @@ enum abstract InputID(String) to String {
 }
 
 enum abstract StateID(Int) to Int {
+	var GAME_STATE;
 	var PRELOAD_STATE;
 	var CREATURE_STATE;
 	var LOGO_STATE;
