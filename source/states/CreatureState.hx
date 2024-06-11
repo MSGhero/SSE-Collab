@@ -16,15 +16,20 @@ import hxd.Res;
 import h2d.Bitmap;
 import mono.command.Command;
 import mono.state.State;
+import ecs.Entity;
 
 class CreatureState extends State {
 	
 	var bg:Bitmap;
+	var bgL:Bitmap;
+	var bgR:Bitmap;
 	var creature:Proto;
 	var creatures:Array<String>;
 	var creatureIndex:Int;
 	
 	var trophy:Proto;
+	
+	var entity:Entity;
 	
 	public function init() {
 		
@@ -44,7 +49,12 @@ class CreatureState extends State {
 		
 		trace("creature state");
 		
-		bg = new Bitmap(Res.load("bgs/bg.png").toTile());
+		entity = ecs.createEntity();
+		
+		bg = new Bitmap(Res.load("bgs/BACKGROUND-A.png").toTile());
+		bgL = new Bitmap(Res.load("bgs/BACKGROUND-B-1.png").toTile());
+		bgR = new Bitmap(Res.load("bgs/BACKGROUND-B-2.png").toTile());
+		bgR.y = 388;
 		
 		creatureIndex = 0;
 		
@@ -53,12 +63,12 @@ class CreatureState extends State {
 		trophy.createAnim([
 			{
 				name : "default",
-				frameNames : AnimRangeParser.parseRanges(["trophy/0000-0051"]),
+				frameNames : AnimRangeParser.parseRanges(["trophy01-52"]),
 				loop : true,
-				fps : 20
+				fps : 10
 			}
 		]);
-		// trophy.add(ecs);
+		trophy.add(ecs);
 		
 		creature = new Proto(ecs.createEntity());
 		creature.createSprite(S2D, FG);
@@ -80,9 +90,15 @@ class CreatureState extends State {
 		creature.sprite.y = 90;
 		
 		Command.queueMany(
-			DisplayListCommand.ADD_TO(bg, ParentID.S2D, LayerID.BG),
-			TimingCommand.ADD_UPDATER(ecs.createEntity(), Timing.every(1 / 60, update)),
-			AudioCommand.PLAY(Res.load("music/Trophy_Gallery.ogg").toSound(), {
+			ADD_TO(bg, ParentID.S2D, LayerID.BG),
+			ADD_TO(bgL, ParentID.S2D, LayerID.BG),
+			ADD_TO(bgR, ParentID.S2D, LayerID.BG),
+			ADD_UPDATER(entity, Timing.every(1 / 60, update)),
+			ADD_UPDATER(entity, Timing.float(0.75, 0, 854, f -> {
+				bgL.x = f - 854;
+				bgR.x = 854 - f;
+			})),
+			PLAY(Res.load("music/Trophy_Gallery.ogg").toSound(), {
 				type : MUSIC,
 				loop : true,
 				volume : 1.0
@@ -93,6 +109,9 @@ class CreatureState extends State {
 	override public function exit() {
 		super.exit();
 		
+		bg.remove();
+		bgL.remove();
+		bgR.remove();
 	}
 	
 	function update() {
