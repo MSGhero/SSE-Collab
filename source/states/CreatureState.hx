@@ -70,6 +70,7 @@ class CreatureState extends State {
 		]);
 		trophy.add(ecs);
 		
+		/*
 		creature = new Proto(ecs.createEntity());
 		creature.createSprite(S2D, FG);
 		creature.createAnim([
@@ -88,6 +89,7 @@ class CreatureState extends State {
 		creature.sprite.scale(0.5);
 		creature.sprite.x = 275;
 		creature.sprite.y = 90;
+		*/
 		
 		Command.queueMany(
 			ADD_TO(bg, ParentID.S2D, LayerID.BG),

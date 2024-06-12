@@ -10,7 +10,6 @@
 -lib hlopenal
 -lib ecs
 -lib mono2D
--lib json2object
 -lib newgrounds
 
 -hl export/hl/SSEC.hl

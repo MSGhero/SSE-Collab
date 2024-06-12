@@ -8,7 +8,6 @@
 -lib heaps
 -lib ecs
 -lib mono2D
--lib json2object
 -lib stb_ogg_sound
 -lib newgrounds
 

@@ -79,7 +79,8 @@ class PreloadState extends State {
 					onSelect : () -> {
 						Command.queueMany(
 							EXIT(PRELOAD_STATE),
-							ENTER(LOGO_STATE)
+							ENTER(LOGO_STATE),
+							ENTER(GAME_STATE)
 						);
 					}
 				};

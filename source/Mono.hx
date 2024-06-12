@@ -104,7 +104,6 @@ class Mono extends AMono {
 			REGISTER_EXIT(PRELOAD_STATE, postInit),
 			REGISTER_STATE(creature, CREATURE_STATE),
 			REGISTER_STATE(logo, LOGO_STATE),
-			ENTER(GAME_STATE),
 			ENTER(PRELOAD_STATE),
 		);
 		
@@ -114,8 +113,6 @@ class Mono extends AMono {
 	function postInit() {
 		
 		var sprites = new Spritesheet();
-		sprites.loadSingle(Res.load("sprites/Cymul.png").toImage(), "cymul"); // iterate json or something
-		sprites.loadSingle(Res.load("sprites/Buckot.png").toImage(), "buckot");
 		sprites.loadTexturePackerData(Res.load("sprites/sprites.png").toImage(), Res.load("sprites/sprites.txt").toText());
 		
 		if (ngMedals) ecsRef.setResources(NG.core);
