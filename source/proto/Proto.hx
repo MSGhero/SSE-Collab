@@ -1,5 +1,7 @@
 package proto;
 
+import mono.geom.Shape;
+import mono.interactive.Interactive;
 import mono.graphics.DisplayListCommand;
 import mono.animation.AnimRequest;
 import IDs.SheetID;
@@ -17,6 +19,7 @@ class Proto {
 	public final entityID:Entity;
 	public var sprite:Picture;
 	public var anim:AnimController;
+	public var int:Interactive;
 	
 	public function new(entityID:Entity) {
 		this.entityID = entityID;
@@ -35,8 +38,13 @@ class Proto {
 		Command.queue(AnimCommand.CREATE_ANIMATION(entityID, SheetID.SPRITES, reqs, play, anim));
 	}
 	
+	public function createInteractive(int:Interactive) {
+		this.int = int;
+	}
+	
 	public function add(ecs:Universe) {
-		ecs.setComponents(entityID, sprite, anim);
+		if (int == null) ecs.setComponents(entityID, sprite, anim);
+		else ecs.setComponents(entityID, sprite, anim, int);
 		Command.queue(DisplayListCommand.ADD_TO(sprite, sprite.parentID, sprite.layerID));
 	}
 	

@@ -1,23 +1,14 @@
 package states;
 
+import mono.geom.Rect;
 import proto.Proto;
 import h3d.Engine;
 import mono.audio.AudioCommand;
-import mono.timing.FloatTweener;
-import h3d.shader.UVScroll;
-import IDs.StateID;
-import mono.state.StateCommand;
 import ecs.Entity;
-import h2d.Video;
 import IDs.InputID;
 import mono.input.InputCommand;
 import mono.timing.Timing;
 import mono.timing.TimingCommand;
-import IDs.LayerID;
-import IDs.ParentID;
-import mono.graphics.DisplayListCommand;
-import hxd.Res;
-import h2d.Bitmap;
 import mono.command.Command;
 import mono.state.State;
 
@@ -28,9 +19,14 @@ class GameState extends State {
 	var volDown:Proto;
 	var volUp:Proto;
 	var vol:Proto;
+	var volLevel:Int;
+	final volLevels:Array<String> = ["mute", "low", "medium", "high"];
+	var oldLevel:Int;
 		
 	public function init() {
 		entity = ecs.createEntity();
+		oldLevel = 3;
+		volLevel = 3;
 	}
 	
 	public function destroy() {
@@ -53,6 +49,11 @@ class GameState extends State {
 			frameNames : ["VOL_DOWN"],
 			loop : false
 		}]);
+		volDown.createInteractive({
+			shape : Rect.fromTL(500, 450, 50, 50),
+			enabled : true,
+			onSelect : volumeDown
+		});
 		volDown.add(ecs);
 		volDown.sprite.x = 500; volDown.sprite.y = 450;
 		
@@ -63,6 +64,11 @@ class GameState extends State {
 			frameNames : ["VOL_UP"],
 			loop : false
 		}]);
+		volUp.createInteractive({
+			shape : Rect.fromTL(750, 450, 50, 50),
+			enabled : true,
+			onSelect : volumeUp
+		});
 		volUp.add(ecs);
 		volUp.sprite.x = 750; volUp.sprite.y = 450;
 		
@@ -76,12 +82,12 @@ class GameState extends State {
 			},
 			{
 				name : "medium",
-				frameNames : ["VOL_HIGH"],
+				frameNames : ["VOL_MEDIUM"],
 				loop : false
 			},
 			{
 				name : "low",
-				frameNames : ["VOL_HIGH"],
+				frameNames : ["VOL_LOW"],
 				loop : false
 			},
 			{
@@ -90,6 +96,11 @@ class GameState extends State {
 				loop : false
 			}
 		], "high");
+		vol.createInteractive({
+			shape : Rect.fromTL(570, 400, 157, 145),
+			enabled : true,
+			onSelect : toggleMute
+		});
 		vol.add(ecs);
 		vol.sprite.x = 570; vol.sprite.y = 400;
 		
@@ -113,16 +124,56 @@ class GameState extends State {
 			}
 			
 			if (actions.justPressed.VOL_DOWN) {
-				Command.queue(AudioCommand.ADJUST_VOLUME(-0.25, vol -> {
-					if (vol < 0.1) Command.queue(MUTE(true));
-				}));
+				volumeDown();
 			}
 			
 			else if (actions.justPressed.VOL_UP) {
-				Command.queue(AudioCommand.ADJUST_VOLUME(0.25, vol -> {
-					if (vol > 0) Command.queue(MUTE(false));
-				}));
+				volumeUp();
 			}
+			
+			if (actions.justPressed.MUTE) {
+				toggleMute();
+			}
+		}));
+	}
+	
+	function volumeDown() {
+		
+		if (volLevel > 0) {
+			
+			volLevel--;
+			oldLevel = volLevel <= 0 ? 1 : volLevel;
+			vol.anim.play(volLevels[volLevel]);
+			
+			Command.queue(AudioCommand.SET_VOLUME(volLevel * 0.3333, null));
+		}
+	}
+	
+	function volumeUp() {
+		
+		if (volLevel < 3) {
+			
+			volLevel++;
+			oldLevel = volLevel;
+			vol.anim.play(volLevels[volLevel]);
+			
+			Command.queue(AudioCommand.SET_VOLUME(volLevel * 0.3333, null));
+		}
+	}
+	
+	function toggleMute() {
+		Command.queue(MUTE_TOGGLE(muted -> {
+			
+			if (muted) {
+				volLevel = 0;
+				vol.anim.play(volLevels[volLevel]);
+			}
+			else {
+				volLevel = oldLevel;
+				vol.anim.play(volLevels[volLevel]);
+			}
+			
+			Command.queue(AudioCommand.SET_VOLUME(volLevel * 0.3333, null));
 		}));
 	}
 }
