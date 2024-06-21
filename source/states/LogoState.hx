@@ -96,7 +96,7 @@ class LogoState extends State {
 					awaitingInput = false;
 					Command.queueMany(
 						EXIT(LOGO_STATE),
-						ENTER(CREATURE_STATE)
+						ENTER(SELECT_STATE)
 					);
 				}
 			}));

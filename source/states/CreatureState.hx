@@ -20,7 +20,6 @@ import ecs.Entity;
 
 class CreatureState extends State {
 	
-	var bg:Bitmap;
 	var bgL:Bitmap;
 	var bgR:Bitmap;
 	var creature:Proto;
@@ -51,7 +50,6 @@ class CreatureState extends State {
 		
 		entity = ecs.createEntity();
 		
-		bg = new Bitmap(Res.load("bgs/BACKGROUND-A.png").toTile());
 		bgL = new Bitmap(Res.load("bgs/BACKGROUND-B-1.png").toTile());
 		bgR = new Bitmap(Res.load("bgs/BACKGROUND-B-2.png").toTile());
 		bgR.y = 388;
@@ -92,26 +90,19 @@ class CreatureState extends State {
 		*/
 		
 		Command.queueMany(
-			ADD_TO(bg, ParentID.S2D, LayerID.BG),
 			ADD_TO(bgL, ParentID.S2D, LayerID.BG),
 			ADD_TO(bgR, ParentID.S2D, LayerID.BG),
 			ADD_UPDATER(entity, Timing.every(1 / 60, update)),
 			ADD_UPDATER(entity, Timing.float(0.75, 0, 854, f -> {
 				bgL.x = f - 854;
 				bgR.x = 854 - f;
-			})),
-			PLAY(Res.load("music/Trophy_Gallery.ogg").toSound(), {
-				type : MUSIC,
-				loop : true,
-				volume : 1.0
-			})
+			}))
 		);
 	}
 	
 	override public function exit() {
 		super.exit();
 		
-		bg.remove();
 		bgL.remove();
 		bgR.remove();
 	}

@@ -1,5 +1,6 @@
 package;
 
+import states.SelectState;
 import states.GameState;
 import states.LogoState;
 import states.CreatureState;
@@ -56,7 +57,7 @@ class Mono extends AMono {
 		
 		// possible that this should go before the preloader
 		final ecs = ecsRef = Universe.create({
-			entities : 400,
+			entities : 100,
 			phases : [
 				{
 					name : "update",
@@ -94,6 +95,7 @@ class Mono extends AMono {
 		var preload = new PreloadState(ecs);
 		var logo = new LogoState(ecs);
 		var creature = new CreatureState(ecs);
+		var select = new SelectState(ecs);
 		
 		Command.queueMany(
 			ADD_PARENT(stage.s2d, S2D),
@@ -103,6 +105,7 @@ class Mono extends AMono {
 			REGISTER_STATE(preload, PRELOAD_STATE),
 			REGISTER_EXIT(PRELOAD_STATE, postInit),
 			REGISTER_STATE(creature, CREATURE_STATE),
+			REGISTER_STATE(select, SELECT_STATE),
 			REGISTER_STATE(logo, LOGO_STATE),
 			ENTER(PRELOAD_STATE),
 		);
@@ -114,6 +117,7 @@ class Mono extends AMono {
 		
 		var sprites = new Spritesheet();
 		sprites.loadTexturePackerData(Res.load("sprites/sprites.png").toImage(), Res.load("sprites/sprites.txt").toText());
+		for (i in 1...6) sprites.loadSingle(Res.load('ui/preview/Subspace Page $i.png').toImage(), 'Subspace Page $i');
 		
 		if (ngMedals) ecsRef.setResources(NG.core);
 		

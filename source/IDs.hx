@@ -29,5 +29,6 @@ enum abstract StateID(Int) to Int {
 	var GAME_STATE;
 	var PRELOAD_STATE;
 	var CREATURE_STATE;
+	var SELECT_STATE;
 	var LOGO_STATE;
 }
