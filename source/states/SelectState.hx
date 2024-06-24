@@ -23,7 +23,14 @@ class SelectState extends State {
 	var bg:Bitmap;
 	
 	var selection:Proto;
+	var highlight:Proto;
 	var byType:Bool;
+	
+	var row:Int;
+	var col:Int;
+	final maxRows:Int = 4;
+	final maxCols:Int = 3;
+	final ssPages:Int = 5;
 	
 	var entity:Entity;
 	
@@ -47,6 +54,8 @@ class SelectState extends State {
 		entity = ecs.createEntity();
 		
 		bg = new Bitmap(Res.load("bgs/BACKGROUND-A.png").toTile());
+		
+		row = col = 0;
 		
 		selection = new Proto(ecs.createEntity());
 		selection.createSprite(S2D, FG);
@@ -115,6 +124,68 @@ class SelectState extends State {
 		selection.add(ecs);
 		selection.sprite.x = 158; selection.sprite.y = 42;
 		
+		highlight = new Proto(ecs.createEntity());
+		highlight.createSprite(S2D, FG);
+		highlight.createAnim([
+			{
+				name : "tl",
+				frameNames : ["tl"],
+				loop : false
+			},
+			{
+				name : "tm",
+				frameNames : ["tm"],
+				loop : false
+			},
+			{
+				name : "tr",
+				frameNames : ["tr"],
+				loop : false
+			},
+			{
+				name : "ml",
+				frameNames : ["ml"],
+				loop : false
+			},
+			{
+				name : "m",
+				frameNames : ["m"],
+				loop : false
+			},
+			{
+				name : "mr",
+				frameNames : ["mr"],
+				loop : false
+			},
+			{
+				name : "bl",
+				frameNames : ["bl"],
+				loop : false
+			},
+			{
+				name : "bm",
+				frameNames : ["bm"],
+				loop : false
+			},
+			{
+				name : "br",
+				frameNames : ["br"],
+				loop : false
+			},
+			{
+				name : "lr",
+				frameNames : ["lr"],
+				loop : false
+			},
+			{
+				name : "tb",
+				frameNames : ["tb"],
+				loop : false
+			},
+		], "tl");
+		highlight.add(ecs);
+		positionHighlight();
+		
 		byType = false;
 		
 		Command.queueMany(
@@ -133,6 +204,7 @@ class SelectState extends State {
 		
 		bg.remove();
 		selection.remove(ecs);
+		highlight.remove(ecs);
 	}
 	
 	function update() {
@@ -145,15 +217,51 @@ class SelectState extends State {
 		final actions = si.get(InputID.MENU);
 		
 		if (actions.justPressed.L) {
-			var frame = Std.parseInt(selection.anim.name) - 1;
-			while (frame < 0) frame += 5;
-			selection.anim.play(Std.string(frame));
+			col--;
+			while (col < 0) col += maxCols;
+			positionHighlight();
 		}
 		
 		else if (actions.justPressed.R) {
-			var frame = Std.parseInt(selection.anim.name) + 1;
-			while (frame >= 5) frame -= 5;
-			selection.anim.play(Std.string(frame));
+			col = (col + 1) % maxCols;
+			positionHighlight();
 		}
+		
+		if (actions.justPressed.U) {
+			row--;
+			while (row < 0) row += maxRows;
+			positionHighlight();
+		}
+		
+		else if (actions.justPressed.D) {
+			row = (row + 1) % maxRows;
+			positionHighlight();
+		}
+	}
+	
+	function positionHighlight() {
+		
+		highlight.sprite.x = 2 + selection.sprite.x + col * 168; highlight.sprite.y = 78 + selection.sprite.y + row * 67;
+		var frame = "";
+		
+		if (col <= 0) {
+			if (row <= 0) frame = "tl";
+			else if (row >= maxRows - 1) frame = "bl";
+			else frame = "ml";
+		}
+		
+		else if (col >= maxCols - 1) {
+			if (row <= 0) frame = "tr";
+			else if (row >= maxRows - 1) frame = "br";
+			else frame = "mr";
+		}
+		
+		else {
+			if (row <= 0) frame = "tm";
+			else if (row >= maxRows - 1) frame = "bm";
+			else frame = "m";
+		}
+		
+		if (highlight.anim.isReady) highlight.anim.play(frame);
 	}
 }

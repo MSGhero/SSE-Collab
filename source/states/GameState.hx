@@ -43,7 +43,7 @@ class GameState extends State {
 		trace("game state");
 		
 		volDown = new Proto(ecs.createEntity());
-		volDown.createSprite(S2D, FG);
+		volDown.createSprite(S2D, UI);
 		volDown.createAnim([{
 			name : "default",
 			frameNames : ["VOL_DOWN"],
@@ -58,7 +58,7 @@ class GameState extends State {
 		volDown.sprite.x = 500; volDown.sprite.y = 450;
 		
 		volUp = new Proto(ecs.createEntity());
-		volUp.createSprite(S2D, FG);
+		volUp.createSprite(S2D, UI);
 		volUp.createAnim([{
 			name : "default",
 			frameNames : ["VOL_UP"],
@@ -73,7 +73,7 @@ class GameState extends State {
 		volUp.sprite.x = 750; volUp.sprite.y = 450;
 		
 		vol = new Proto(ecs.createEntity());
-		vol.createSprite(S2D, FG);
+		vol.createSprite(S2D, UI);
 		vol.createAnim([
 			{
 				name : "high",

@@ -9,6 +9,7 @@ enum abstract LayerID(Int) to Int {
 	var NONE = -1;
 	var BG;
 	var FG;
+	var UI;
 }
 
 enum abstract SheetID(String) to String {
