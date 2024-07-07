@@ -118,6 +118,7 @@ class Mono extends AMono {
 		var sprites = new Spritesheet();
 		sprites.loadTexturePackerData(Res.load("sprites/sprites.png").toImage(), Res.load("sprites/sprites.txt").toText());
 		for (i in 1...6) sprites.loadSingle(Res.load('ui/preview/Subspace Page $i.png').toImage(), 'Subspace Page $i');
+		for (i in 1...8) sprites.loadSingle(Res.load('ui/preview/Type Page $i.png').toImage(), 'Type Page $i');
 		
 		if (ngMedals) ecsRef.setResources(NG.core);
 		

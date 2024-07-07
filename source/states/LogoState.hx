@@ -95,7 +95,7 @@ class LogoState extends State {
 			Command.now(RAW_INPUT(si -> {
 				final actions = si.get(MENU);
 				
-				if (actions.justPressed.SELECT || actions.justPressed.OPEN) {
+				if (actions.justPressed.SELECT) {
 					awaitingInput = false;
 					Command.queueMany(
 						EXIT(LOGO_STATE),

@@ -15,10 +15,7 @@ class DefaultMappings {
 		mapping[Action.U] = [Key.UP, Key.W, Key.I];
 		mapping[Action.D] = [Key.DOWN, Key.S, Key.K];
 		
-		mapping[Action.PAGE_L] = [Key.Z];
-		mapping[Action.PAGE_R] = [Key.C];
-		
-		mapping[Action.LINK] = [Key.SPACE];
+		mapping[Action.LINK] = [Key.SPACE, Key.Z, Key.ENTER];
 		
 		mapping[Action.VOL_DOWN] = [Key.QWERTY_MINUS, Key.NUMBER_9];
 		mapping[Action.VOL_UP] = [Key.QWERTY_EQUALS, Key.NUMBER_0];

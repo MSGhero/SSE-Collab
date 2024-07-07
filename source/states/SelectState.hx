@@ -1,5 +1,7 @@
 package states;
 
+import IDs.StateID;
+import mono.state.StateCommand;
 import mono.audio.AudioCommand;
 import mono.input.Input;
 import haxe.ds.StringMap;
@@ -83,7 +85,7 @@ class SelectState extends State {
 				name : "4",
 				frameNames : ["Subspace Page 5"],
 				loop : false
-			},/*
+			},
 			{
 				name : "5",
 				frameNames : ["Type Page 1"],
@@ -118,8 +120,8 @@ class SelectState extends State {
 				name : "11",
 				frameNames : ["Type Page 7"],
 				loop : false
-			},*/
-		], "0");
+			},
+		], "5");
 		selection.add(ecs);
 		selection.sprite.x = 158; selection.sprite.y = 42;
 		
@@ -217,12 +219,51 @@ class SelectState extends State {
 		
 		if (actions.justPressed.L) {
 			col--;
-			while (col < 0) col += maxCols;
+			if (col < 0) {
+				col += maxCols;
+				selection.anim.play(
+					switch (selection.anim.name) {
+						case "0": "4";
+						case "1": "0";
+						case "2": "1";
+						case "3": "2";
+						case "4": "3";
+						case "5": "11";
+						case "6": "5";
+						case "7": "6";
+						case "8": "7";
+						case "9": "8";
+						case "10": "9";
+						case "11": "10";
+						default: "0";
+					}
+				);
+			}
 			positionHighlight();
 		}
 		
 		else if (actions.justPressed.R) {
-			col = (col + 1) % maxCols;
+			col++;
+			if (col >= maxCols) {
+				col -= maxCols;
+				selection.anim.play(
+					switch (selection.anim.name) {
+						case "0": "1";
+						case "1": "2";
+						case "2": "3";
+						case "3": "4";
+						case "4": "0";
+						case "5": "6";
+						case "6": "7";
+						case "7": "8";
+						case "8": "9";
+						case "9": "10";
+						case "10": "11";
+						case "11": "5";
+						default: "0";
+					}
+				);
+			}
 			positionHighlight();
 		}
 		
@@ -235,6 +276,13 @@ class SelectState extends State {
 		else if (actions.justPressed.D) {
 			row = (row + 1) % maxRows;
 			positionHighlight();
+		}
+		
+		if (actions.justPressed.SELECT) {
+			Command.queueMany(
+				EXIT(SELECT_STATE),
+				ENTER(CREATURE_STATE)
+			);
 		}
 	}
 	

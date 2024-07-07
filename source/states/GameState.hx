@@ -42,7 +42,7 @@ class GameState extends State {
 		
 		trace("game state");
 		
-		var tlX = 600, tlY = 350;
+		var tlX = 650, tlY = 350;
 		
 		volDown = new Proto(ecs.createEntity());
 		volDown.createSprite(S2D, UI);
