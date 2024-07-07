@@ -15,8 +15,9 @@ class DefaultMappings {
 		mapping[Action.U] = [Key.UP, Key.W, Key.I];
 		mapping[Action.D] = [Key.DOWN, Key.S, Key.K];
 		
-		mapping[Action.OPEN] = [Key.Z];
-		mapping[Action.CLOSE] = [Key.X];
+		mapping[Action.PAGE_L] = [Key.Z];
+		mapping[Action.PAGE_R] = [Key.C];
+		
 		mapping[Action.LINK] = [Key.SPACE];
 		
 		mapping[Action.VOL_DOWN] = [Key.QWERTY_MINUS, Key.NUMBER_9];
@@ -38,8 +39,9 @@ class DefaultMappings {
 		mapping[Action.U] = [PadButtons.UP_DPAD, PadButtons.UP_L_VIRTUAL];
 		mapping[Action.D] = [PadButtons.DOWN_DPAD, PadButtons.DOWN_L_VIRTUAL];
 		
-		mapping[Action.OPEN] = [PadButtons.A];
-		mapping[Action.CLOSE] = [PadButtons.B];
+		mapping[Action.PAGE_L] = [PadButtons.LB, PadButtons.LT];
+		mapping[Action.PAGE_R] = [PadButtons.RB, PadButtons.RT];
+		
 		mapping[Action.LINK] = [PadButtons.Y];
 		
 		return mapping;
@@ -49,11 +51,8 @@ class DefaultMappings {
 		
 		var mapping = new InputMapping();
 		
-		mapping[Action.U] = [Key.MOUSE_WHEEL_UP];
-		mapping[Action.D] = [Key.MOUSE_WHEEL_DOWN];
 		mapping[Action.SELECT] = [Key.MOUSE_LEFT];
 		mapping[Action.DESELECT] = [Key.MOUSE_RIGHT];
-		mapping[Action.WHEEL] = [Key.MOUSE_WHEEL_UP, Key.MOUSE_WHEEL_DOWN];
 		
 		return mapping;
 	}

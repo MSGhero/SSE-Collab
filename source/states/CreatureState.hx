@@ -1,6 +1,6 @@
 package states;
 
-import mono.animation.AnimRangeParser;
+import mono.animation.AnimParser;
 import mono.audio.AudioCommand;
 import mono.input.Input;
 import haxe.ds.StringMap;
@@ -61,7 +61,7 @@ class CreatureState extends State {
 		trophy.createAnim([
 			{
 				name : "default",
-				frameNames : AnimRangeParser.parseRanges(["trophy01-52"]),
+				frameNames : AnimParser.parseRanges(["trophy01-52"]),
 				loop : true,
 				fps : 10
 			}

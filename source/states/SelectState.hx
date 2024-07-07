@@ -1,6 +1,5 @@
 package states;
 
-import mono.animation.AnimRangeParser;
 import mono.audio.AudioCommand;
 import mono.input.Input;
 import haxe.ds.StringMap;

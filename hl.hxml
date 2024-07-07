@@ -1,7 +1,7 @@
 -cp source
 -D resourcesPath=assets
 
--D windowSize=640x480
+-D windowSize=854x480
 
 -D ecs.no_debug_output
 

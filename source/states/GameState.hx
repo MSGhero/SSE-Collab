@@ -42,6 +42,8 @@ class GameState extends State {
 		
 		trace("game state");
 		
+		var tlX = 600, tlY = 350;
+		
 		volDown = new Proto(ecs.createEntity());
 		volDown.createSprite(S2D, UI);
 		volDown.createAnim([{
@@ -50,12 +52,12 @@ class GameState extends State {
 			loop : false
 		}]);
 		volDown.createInteractive({
-			shape : Rect.fromTL(500, 450, 50, 50),
+			shape : Rect.fromTL(tlX, tlY, 26, 25),
 			enabled : true,
 			onSelect : volumeDown
 		});
 		volDown.add(ecs);
-		volDown.sprite.x = 500; volDown.sprite.y = 450;
+		volDown.sprite.x = tlX; volDown.sprite.y = tlY;
 		
 		volUp = new Proto(ecs.createEntity());
 		volUp.createSprite(S2D, UI);
@@ -65,12 +67,12 @@ class GameState extends State {
 			loop : false
 		}]);
 		volUp.createInteractive({
-			shape : Rect.fromTL(750, 450, 50, 50),
+			shape : Rect.fromTL(tlX + 141, tlY, 26, 25),
 			enabled : true,
 			onSelect : volumeUp
 		});
 		volUp.add(ecs);
-		volUp.sprite.x = 750; volUp.sprite.y = 450;
+		volUp.sprite.x = tlX + 141; volUp.sprite.y = tlY;
 		
 		vol = new Proto(ecs.createEntity());
 		vol.createSprite(S2D, UI);
@@ -97,12 +99,12 @@ class GameState extends State {
 			}
 		], "high");
 		vol.createInteractive({
-			shape : Rect.fromTL(570, 400, 157, 145),
+			shape : Rect.fromTL(tlX + 41, tlY - 28, 85, 80),
 			enabled : true,
 			onSelect : toggleMute
 		});
 		vol.add(ecs);
-		vol.sprite.x = 570; vol.sprite.y = 400;
+		vol.sprite.x = tlX + 41; vol.sprite.y = tlY - 28;
 		
 		Command.queueMany(
 			ADD_UPDATER(entity, Timing.every(1 / 60, update))
