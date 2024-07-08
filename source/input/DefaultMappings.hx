@@ -15,7 +15,8 @@ class DefaultMappings {
 		mapping[Action.U] = [Key.UP, Key.W, Key.I];
 		mapping[Action.D] = [Key.DOWN, Key.S, Key.K];
 		
-		mapping[Action.LINK] = [Key.SPACE, Key.Z, Key.ENTER];
+		mapping[Action.SELECT] = [Key.SPACE, Key.Z];
+		mapping[Action.LINK] = [Key.ENTER];
 		
 		mapping[Action.VOL_DOWN] = [Key.QWERTY_MINUS, Key.NUMBER_9];
 		mapping[Action.VOL_UP] = [Key.QWERTY_EQUALS, Key.NUMBER_0];
@@ -48,8 +49,7 @@ class DefaultMappings {
 		
 		var mapping = new InputMapping();
 		
-		// really just want mouse to be a click and not SELECT
-		// mapping[Action.SELECT] = [Key.MOUSE_LEFT];
+		mapping[Action.MOUSE] = [Key.MOUSE_LEFT];
 		// mapping[Action.DESELECT] = [Key.MOUSE_RIGHT];
 		
 		return mapping;

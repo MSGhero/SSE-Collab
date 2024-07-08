@@ -10,6 +10,7 @@ enum abstract Action(Int) from Int to Int {
 	var PAGE_L;
 	var PAGE_R;
 	
+	var MOUSE;
 	var SELECT;
 	var DESELECT;
 	var LINK;
