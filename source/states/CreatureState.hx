@@ -63,12 +63,11 @@ class CreatureState extends State {
 				name : "default",
 				frameNames : AnimParser.parseRanges(["trophy01-52"]),
 				loop : true,
-				fps : 10
+				fps : 30
 			}
 		]);
 		trophy.add(ecs);
 		
-		/*
 		creature = new Proto(ecs.createEntity());
 		creature.createSprite(S2D, FG);
 		creature.createAnim([
@@ -84,16 +83,14 @@ class CreatureState extends State {
 			},
 		], creatures[creatureIndex]);
 		creature.add(ecs);
-		creature.sprite.scale(0.5);
 		creature.sprite.x = 275;
 		creature.sprite.y = 90;
-		*/
 		
 		Command.queueMany(
 			ADD_TO(bgL, ParentID.S2D, LayerID.BG),
 			ADD_TO(bgR, ParentID.S2D, LayerID.BG),
 			ADD_UPDATER(entity, Timing.every(1 / 60, update)),
-			ADD_UPDATER(entity, Timing.float(0.75, 0, 854, f -> {
+			ADD_UPDATER(entity, Timing.float(0.25, 0, 854, f -> {
 				bgL.x = f - 854;
 				bgR.x = 854 - f;
 			}))

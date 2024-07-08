@@ -75,7 +75,13 @@ class PreloadState extends State {
 				
 				final int:Interactive = {
 					enabled : true,
-					shape : Rect.fromTL(0, 0, 854, 480),
+					shape : Rect.fromTL(120, 65, 854 - 240, 480 - 105),
+					onOver : () -> {
+						bm.tile = Res.load("Click_Icon_2.png").toTile();
+					},
+					onOut : () -> {
+						bm.tile = Res.load("Click_Icon.png").toTile();
+					},
 					onSelect : () -> {
 						Command.queueMany(
 							EXIT(PRELOAD_STATE),

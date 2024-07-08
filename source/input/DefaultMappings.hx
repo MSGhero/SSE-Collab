@@ -48,8 +48,9 @@ class DefaultMappings {
 		
 		var mapping = new InputMapping();
 		
-		mapping[Action.SELECT] = [Key.MOUSE_LEFT];
-		mapping[Action.DESELECT] = [Key.MOUSE_RIGHT];
+		// really just want mouse to be a click and not SELECT
+		// mapping[Action.SELECT] = [Key.MOUSE_LEFT];
+		// mapping[Action.DESELECT] = [Key.MOUSE_RIGHT];
 		
 		return mapping;
 	}

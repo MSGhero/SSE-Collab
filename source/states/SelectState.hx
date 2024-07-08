@@ -121,7 +121,7 @@ class SelectState extends State {
 				frameNames : ["Type Page 7"],
 				loop : false
 			},
-		], "5");
+		], "0");
 		selection.add(ecs);
 		selection.sprite.x = 158; selection.sprite.y = 42;
 		
@@ -206,6 +206,7 @@ class SelectState extends State {
 		bg.remove();
 		selection.remove(ecs);
 		highlight.remove(ecs);
+		ecs.deleteEntity(entity);
 	}
 	
 	function update() {
@@ -276,6 +277,11 @@ class SelectState extends State {
 		else if (actions.justPressed.D) {
 			row = (row + 1) % maxRows;
 			positionHighlight();
+		}
+		
+		if (actions.justPressed.PAGE_L || actions.justPressed.PAGE_R) {
+			byType = !byType;
+			selection.anim.play(byType ? "5" : "0");
 		}
 		
 		if (actions.justPressed.SELECT) {
