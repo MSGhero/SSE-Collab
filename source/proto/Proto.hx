@@ -29,13 +29,9 @@ class Proto {
 		sprite = new Picture(null, parentID, layerID);
 	}
 	
-	public function createAnim(reqs:Array<AnimRequest>, play:String = "default") {
-		
-		if (anim == null) {
-			anim = new AnimController();
-		}
-		
-		Command.queue(AnimCommand.CREATE_ANIMATION(entityID, SheetID.SPRITES, reqs, play, anim));
+	public function createAnim(prefix:String, play:String = "default") {
+		anim = new AnimController(prefix);
+		anim.play(play);
 	}
 	
 	public function createInteractive(int:Interactive) {

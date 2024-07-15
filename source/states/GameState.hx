@@ -46,11 +46,7 @@ class GameState extends State {
 		
 		volDown = new Proto(ecs.createEntity());
 		volDown.createSprite(S2D, UI);
-		volDown.createAnim([{
-			name : "default",
-			frameNames : ["VOL_DOWN"],
-			loop : false
-		}]);
+		volDown.createAnim("volDown");
 		volDown.createInteractive({
 			shape : Rect.fromTL(tlX, tlY, 26, 25),
 			enabled : true,
@@ -61,11 +57,7 @@ class GameState extends State {
 		
 		volUp = new Proto(ecs.createEntity());
 		volUp.createSprite(S2D, UI);
-		volUp.createAnim([{
-			name : "default",
-			frameNames : ["VOL_UP"],
-			loop : false
-		}]);
+		volUp.createAnim("volUp");
 		volUp.createInteractive({
 			shape : Rect.fromTL(tlX + 141, tlY, 26, 25),
 			enabled : true,
@@ -76,28 +68,7 @@ class GameState extends State {
 		
 		vol = new Proto(ecs.createEntity());
 		vol.createSprite(S2D, UI);
-		vol.createAnim([
-			{
-				name : "high",
-				frameNames : ["VOL_HIGH"],
-				loop : false
-			},
-			{
-				name : "medium",
-				frameNames : ["VOL_MEDIUM"],
-				loop : false
-			},
-			{
-				name : "low",
-				frameNames : ["VOL_LOW"],
-				loop : false
-			},
-			{
-				name : "mute",
-				frameNames : ["VOL_MUTE"],
-				loop : false
-			}
-		], "high");
+		vol.createAnim("vol", "high");
 		vol.createInteractive({
 			shape : Rect.fromTL(tlX + 41, tlY - 28, 85, 80),
 			enabled : true,

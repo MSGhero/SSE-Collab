@@ -32,7 +32,7 @@ class CreatureState extends State {
 	
 	public function init() {
 		
-		creatures = ["cymul", "buckot"];
+		creatures = ["cymul"];
 	}
 	
 	public function destroy() {
@@ -58,16 +58,9 @@ class CreatureState extends State {
 		
 		trophy = new Proto(ecs.createEntity());
 		trophy.createSprite(S2D, FG);
-		trophy.createAnim([
-			{
-				name : "default",
-				frameNames : AnimParser.parseRanges(["trophy01-52"]),
-				loop : true,
-				fps : 30
-			}
-		]);
+		trophy.createAnim("trophy");
 		trophy.add(ecs);
-		
+		/*
 		creature = new Proto(ecs.createEntity());
 		creature.createSprite(S2D, FG);
 		creature.createAnim([
@@ -75,17 +68,12 @@ class CreatureState extends State {
 				name : "cymul",
 				frameNames : ["cymul"],
 				loop : false
-			},
-			{
-				name : "buckot",
-				frameNames : ["buckot"],
-				loop : false
-			},
+			}
 		], creatures[creatureIndex]);
 		creature.add(ecs);
 		creature.sprite.x = 275;
 		creature.sprite.y = 90;
-		
+		*/
 		Command.queueMany(
 			ADD_TO(bgL, ParentID.S2D, LayerID.BG),
 			ADD_TO(bgR, ParentID.S2D, LayerID.BG),
@@ -112,7 +100,7 @@ class CreatureState extends State {
 	function handleInput(si:StringMap<Input>) {
 		
 		final actions = si.get(InputID.MENU);
-		
+		/*
 		if (actions.justPressed.L) {
 			creatureIndex--;
 			while (creatureIndex < 0) creatureIndex += creatures.length;
@@ -123,5 +111,6 @@ class CreatureState extends State {
 			creatureIndex = (creatureIndex + 1) % creatures.length;
 			creature.anim.play(creatures[creatureIndex]);
 		}
+		*/
 	}
 }

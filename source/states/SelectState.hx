@@ -60,130 +60,13 @@ class SelectState extends State {
 		
 		selection = new Proto(ecs.createEntity());
 		selection.createSprite(S2D, FG);
-		selection.createAnim([
-			{
-				name : "0",
-				frameNames : ["Subspace Page 1"],
-				loop : false
-			},
-			{
-				name : "1",
-				frameNames : ["Subspace Page 2"],
-				loop : false
-			},
-			{
-				name : "2",
-				frameNames : ["Subspace Page 3"],
-				loop : false
-			},
-			{
-				name : "3",
-				frameNames : ["Subspace Page 4"],
-				loop : false
-			},
-			{
-				name : "4",
-				frameNames : ["Subspace Page 5"],
-				loop : false
-			},
-			{
-				name : "5",
-				frameNames : ["Type Page 1"],
-				loop : false
-			},
-			{
-				name : "6",
-				frameNames : ["Type Page 2"],
-				loop : false
-			},
-			{
-				name : "7",
-				frameNames : ["Type Page 3"],
-				loop : false
-			},
-			{
-				name : "8",
-				frameNames : ["Type Page 4"],
-				loop : false
-			},
-			{
-				name : "9",
-				frameNames : ["Type Page 5"],
-				loop : false
-			},
-			{
-				name : "10",
-				frameNames : ["Type Page 6"],
-				loop : false
-			},
-			{
-				name : "11",
-				frameNames : ["Type Page 7"],
-				loop : false
-			},
-		], "0");
+		selection.createAnim("selection", "0");
 		selection.add(ecs);
 		selection.sprite.x = 158; selection.sprite.y = 42;
 		
 		highlight = new Proto(ecs.createEntity());
 		highlight.createSprite(S2D, FG);
-		highlight.createAnim([
-			{
-				name : "tl",
-				frameNames : ["tl"],
-				loop : false
-			},
-			{
-				name : "tm",
-				frameNames : ["tm"],
-				loop : false
-			},
-			{
-				name : "tr",
-				frameNames : ["tr"],
-				loop : false
-			},
-			{
-				name : "ml",
-				frameNames : ["ml"],
-				loop : false
-			},
-			{
-				name : "m",
-				frameNames : ["m"],
-				loop : false
-			},
-			{
-				name : "mr",
-				frameNames : ["mr"],
-				loop : false
-			},
-			{
-				name : "bl",
-				frameNames : ["bl"],
-				loop : false
-			},
-			{
-				name : "bm",
-				frameNames : ["bm"],
-				loop : false
-			},
-			{
-				name : "br",
-				frameNames : ["br"],
-				loop : false
-			},
-			{
-				name : "lr",
-				frameNames : ["lr"],
-				loop : false
-			},
-			{
-				name : "tb",
-				frameNames : ["tb"],
-				loop : false
-			},
-		], "tl");
+		highlight.createAnim("highlight", "tl");
 		highlight.add(ecs);
 		positionHighlight();
 		

@@ -111,6 +111,7 @@ class Mono extends AMono {
 	}
 	
 	function postInit() {
+		// rename to like... postPreload
 		
 		var sprites = new Spritesheet();
 		sprites.loadTexturePackerData(Res.load("sprites/sprites.png").toImage(), Res.load("sprites/sprites.txt").toText());
@@ -119,8 +120,13 @@ class Mono extends AMono {
 		
 		if (ngMedals) ecsRef.setResources(NG.core);
 		
+		// init states should all go in here too
+		
 		Command.queueMany(
-			ADD_SHEET(sprites, SheetID.SPRITES)
+			ADD_SHEET(sprites, SheetID.SPRITES),
+			PARSE_ANIMS(["specs/ui.txt"], SPRITES),
+			ENTER(LOGO_STATE),
+			ENTER(GAME_STATE)
 		);
 	}
 }
