@@ -31,9 +31,72 @@ class SelectState extends State {
 	var col:Int;
 	final maxRows:Int = 4;
 	final maxCols:Int = 3;
-	final ssPages:Int = 5;
 	
 	var entity:Entity;
+	
+	final namesBySubspace:Array<String> = [
+		"primid", "sword primid", "boom primid",
+		"scope primid", "big primid", "metal primid",
+		"fire primid", "glire", "glice",
+		"glunder", "poppant", "bytan",
+		
+		"roader", "bombed", "greap",
+		"bucculus", "towtow", "floow",
+		"auroros", "buckot", "jyx",
+		"gamyga", "feyesh", "trowlon",
+		
+		"roturret", "spaak", "puppit",
+		"shaydas", "mites", "shellpod",
+		"nagagog", "cymul", "ticken",
+		"armight", "borboras", "autolance",
+		
+		"armank", "rob sentry", "rob launcher",
+		"rob blaster", "mizzo", "goomba",
+		"koopa troopa", "koopa paratroopa", "hammer bros",
+		"bullet bill", "giant goomba", "galleom",
+		
+		"duon", "tabuu", "master hand",
+		"crazy hand", "petey piranha", "rayquaza",
+		"porky", "porky statue", "ridley",
+		"meta ridley", "ancient minister", null
+	];
+	
+	final namesByType:Array<String> = [
+		"primid", "sword primid", "boom primid",
+		"scope primid", "big primid", "metal primid",
+		"fire primid", null, null,
+		null, null, null,
+		
+		"glire", "glice", "glunder",
+		"poppant", "bytan",	"roader",
+		"bombed", "greap", "bucculus",
+		"towtow", "floow", "auroros",
+		
+		"buckot", "jyx", "gamyga",
+		"feyesh", "trowlon", "roturret",
+		"spaak", "puppit", "shaydas",
+		"mites", "shellpod", "nagagog",
+		
+		"cymul", "ticken", "armight",
+		"borboras", "autolance", "armank",
+		"mizzo", null, null,
+		null, null, null,
+		
+		"rob sentry", "rob launcher", "rob blaster",
+		"ancient minister", null, null,
+		null, null, null,
+		null, null, null,
+		
+		"goomba", "koopa troopa", "koopa paratroopa",
+		"hammer bros", "bullet bill", "giant goomba",
+		null, null, null,
+		null, null, null,
+		
+		"galleom", "duon", "tabuu",
+		"master hand", "crazy hand", "petey piranha",
+		"rayquaza", "porky", "porky statue",
+		"ridley", "meta ridley", null
+	];
 	
 	public function init() {
 		
@@ -168,10 +231,21 @@ class SelectState extends State {
 		}
 		
 		if (actions.justPressed.SELECT) {
+			
+			if (byType) {
+				trace(namesByType[(Std.parseInt(selection.anim.name) - 5) * maxRows * maxCols + row * maxCols + col]);
+			}
+			
+			else {
+				trace(namesBySubspace[Std.parseInt(selection.anim.name) * maxRows * maxCols + row * maxCols + col]);
+			}
+			
+			/*
 			Command.queueMany(
 				EXIT(SELECT_STATE),
 				ENTER(CREATURE_STATE)
 			);
+			*/
 		}
 	}
 	

@@ -26,6 +26,7 @@ class LogoState extends State {
 	var fg:Bitmap;
 	var bg:Bitmap;
 	var awaitingInput:Bool;
+	var videoEnded:Bool;
 	
 	var entity:Entity;
 	
@@ -55,6 +56,7 @@ class LogoState extends State {
 		
 		#if js
 		video = new Video();
+		videoEnded = false;
 		video.loadFile("Logo_Animation.webm", () -> {
 			
 			video.setScale(1 / 2.25);
@@ -91,6 +93,25 @@ class LogoState extends State {
 	
 	function update() {
 		
+		if (videoEnded) {
+			
+			if (video != null) video.remove();
+			
+			bg.alpha = fg.alpha = 0;
+			
+			Command.queueMany(
+				ADD_TO(bm, S2D, FG),
+				ADD_TO(bg, S2D, BG),
+				ADD_TO(fg, S2D, BG),
+				ADD_UPDATER(entity, new FloatTweener(0.75, 0, 1, f -> {
+					bg.alpha = fg.alpha = f;
+				}))
+			);
+			
+			awaitingInput = true;
+			videoEnded = false;
+		}
+		
 		if (awaitingInput) {
 			Command.now(RAW_INPUT(si -> {
 				final actions = si.get(MENU);
@@ -107,20 +128,7 @@ class LogoState extends State {
 	}
 	
 	function onVideoEnd() {
-		
-		if (video != null) video.remove();
-		
-		bg.alpha = fg.alpha = 0;
-		
-		Command.queueMany(
-			ADD_TO(bm, S2D, FG),
-			ADD_TO(bg, S2D, BG),
-			ADD_TO(fg, S2D, BG),
-			ADD_UPDATER(entity, new FloatTweener(0.75, 0, 1, f -> {
-				bg.alpha = fg.alpha = f;
-			}))
-		);
-		
-		awaitingInput = true;
+		// queue up handling to keep consistent with ecs timings
+		videoEnded = true;
 	}
 }

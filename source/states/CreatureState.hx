@@ -1,6 +1,5 @@
 package states;
 
-import mono.animation.AnimParser;
 import mono.audio.AudioCommand;
 import mono.input.Input;
 import haxe.ds.StringMap;
@@ -60,20 +59,14 @@ class CreatureState extends State {
 		trophy.createSprite(S2D, FG);
 		trophy.createAnim("trophy");
 		trophy.add(ecs);
-		/*
+		
 		creature = new Proto(ecs.createEntity());
 		creature.createSprite(S2D, FG);
-		creature.createAnim([
-			{
-				name : "cymul",
-				frameNames : ["cymul"],
-				loop : false
-			}
-		], creatures[creatureIndex]);
+		creature.createAnim("", creatures[creatureIndex]);
 		creature.add(ecs);
 		creature.sprite.x = 275;
 		creature.sprite.y = 90;
-		*/
+		
 		Command.queueMany(
 			ADD_TO(bgL, ParentID.S2D, LayerID.BG),
 			ADD_TO(bgR, ParentID.S2D, LayerID.BG),

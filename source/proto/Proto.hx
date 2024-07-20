@@ -1,11 +1,7 @@
 package proto;
 
-import mono.geom.Shape;
 import mono.interactive.Interactive;
 import mono.graphics.DisplayListCommand;
-import mono.animation.AnimRequest;
-import IDs.SheetID;
-import mono.animation.AnimCommand;
 import mono.command.Command;
 import mono.animation.AnimController;
 import IDs.LayerID;
