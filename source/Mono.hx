@@ -100,7 +100,7 @@ class Mono extends AMono {
 			REGISTER_INPUT(ecs.createEntity(), MENU),
 			REGISTER_STATE(game, GAME_STATE),
 			REGISTER_STATE(preload, PRELOAD_STATE),
-			REGISTER_EXIT(PRELOAD_STATE, postInit),
+			REGISTER_EXIT(PRELOAD_STATE, postPreload),
 			REGISTER_STATE(creature, CREATURE_STATE),
 			REGISTER_STATE(select, SELECT_STATE),
 			REGISTER_STATE(logo, LOGO_STATE),
@@ -110,8 +110,7 @@ class Mono extends AMono {
 		loadedIn = true;
 	}
 	
-	function postInit() {
-		// rename to like... postPreload
+	function postPreload() {
 		
 		var sprites = new Spritesheet();
 		sprites.loadTexturePackerData(Res.load("sprites/sprites.png").toImage(), Res.load("sprites/sprites.txt").toText());

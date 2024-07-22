@@ -1,5 +1,6 @@
 package states;
 
+import mono.state.StateCommand;
 import mono.audio.AudioCommand;
 import mono.input.Input;
 import haxe.ds.StringMap;
@@ -32,6 +33,8 @@ class CreatureState extends State {
 	public function init() {
 		
 		creatures = ["cymul"];
+		
+		Command.queue(REGISTER_TRIGGER("setCreature", onSetCreature));
 	}
 	
 	public function destroy() {
@@ -88,6 +91,11 @@ class CreatureState extends State {
 	function update() {
 		
 		Command.now(InputCommand.RAW_INPUT(handleInput));
+	}
+	
+	function onSetCreature(name:String) {
+		trace(name);
+		// creature.anim.play(name);
 	}
 	
 	function handleInput(si:StringMap<Input>) {

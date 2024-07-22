@@ -89,6 +89,10 @@ class LogoState extends State {
 		fg.remove();
 		bg.remove();
 		if (video != null) video.remove();
+		
+		// add fadeout?
+		
+		Command.queue(STOP_BY_TYPE(MUSIC));
 	}
 	
 	function update() {
@@ -99,13 +103,26 @@ class LogoState extends State {
 			
 			bg.alpha = fg.alpha = 0;
 			
+			final ft = new FloatTweener(0.75, 0, 1, f -> {
+				bg.alpha = fg.alpha = f;
+			});
+			
+			ft.onComplete = () -> {
+				Command.queueMany(
+					PLAY(Res.load("music/Save Point.ogg").toSound(), {
+						type : MUSIC,
+						loop : true,
+						volume : 1.0
+					}),
+					FADE(2, 0, 1, null, "music")
+				);
+			};
+			
 			Command.queueMany(
 				ADD_TO(bm, S2D, FG),
 				ADD_TO(bg, S2D, BG),
 				ADD_TO(fg, S2D, BG),
-				ADD_UPDATER(entity, new FloatTweener(0.75, 0, 1, f -> {
-					bg.alpha = fg.alpha = f;
-				}))
+				ADD_UPDATER(entity, ft)
 			);
 			
 			awaitingInput = true;

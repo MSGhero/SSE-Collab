@@ -1,5 +1,7 @@
 package states;
 
+import mono.geom.Rect;
+import mono.interactive.Interactive;
 import IDs.StateID;
 import mono.state.StateCommand;
 import mono.audio.AudioCommand;
@@ -135,6 +137,45 @@ class SelectState extends State {
 		
 		byType = false;
 		
+		for (i in 0...12) {
+			var int:Interactive = {
+				shape : Rect.fromTL(2 + selection.sprite.x + (i % maxCols) * 168, 78 + selection.sprite.y + Std.int(i / maxCols) * 67, 168, 67),
+				enabled : true,
+				onOver : () -> {
+					row = Std.int(i / maxCols);
+					col = i % maxCols;
+					positionHighlight();
+				}
+			};
+			ecs.setComponents(ecs.createEntity(), int);
+		}
+		
+		var int:Interactive = {
+			shape : Rect.fromTL(selection.sprite.x, selection.sprite.y, 200, 32),
+			enabled : true,
+			onSelect : () -> {
+				if (byType) {
+					byType = false;
+					selection.anim.play(byType ? "5" : "0");
+				}
+			}
+		};
+		
+		ecs.setComponents(ecs.createEntity(), int);
+		
+		int = {
+			shape : Rect.fromTL(selection.sprite.x + 200, selection.sprite.y, 200, 32),
+			enabled : true,
+			onSelect : () -> {
+				if (!byType) {
+					byType = true;
+					selection.anim.play(byType ? "5" : "0");
+				}
+			}
+		};
+		
+		ecs.setComponents(ecs.createEntity(), int);
+		
 		Command.queueMany(
 			ADD_TO(bg, ParentID.S2D, LayerID.BG),
 			ADD_UPDATER(entity, Timing.every(1 / 60, update)),
@@ -232,20 +273,14 @@ class SelectState extends State {
 		
 		if (actions.justPressed.SELECT) {
 			
-			if (byType) {
-				trace(namesByType[(Std.parseInt(selection.anim.name) - 5) * maxRows * maxCols + row * maxCols + col]);
+			final name = byType ? namesByType[(Std.parseInt(selection.anim.name) - 5) * maxRows * maxCols + row * maxCols + col] : namesBySubspace[Std.parseInt(selection.anim.name) * maxRows * maxCols + row * maxCols + col];
+			if (name != null) {
+				Command.queueMany(
+					EXIT(SELECT_STATE),
+					ENTER(CREATURE_STATE),
+					TRIGGER("setCreature", name)
+				);
 			}
-			
-			else {
-				trace(namesBySubspace[Std.parseInt(selection.anim.name) * maxRows * maxCols + row * maxCols + col]);
-			}
-			
-			/*
-			Command.queueMany(
-				EXIT(SELECT_STATE),
-				ENTER(CREATURE_STATE)
-			);
-			*/
 		}
 	}
 	
