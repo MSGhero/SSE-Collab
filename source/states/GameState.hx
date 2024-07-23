@@ -76,10 +76,6 @@ class GameState extends State {
 		});
 		vol.add(ecs);
 		vol.sprite.x = tlX + 41; vol.sprite.y = tlY - 28;
-		
-		Command.queueMany(
-			ADD_UPDATER(entity, Timing.every(1 / 60, update))
-		);
 	}
 	
 	override public function exit() {
@@ -87,7 +83,7 @@ class GameState extends State {
 		
 	}
 	
-	function update() {
+	override public function update() {
 		
 		Command.now(RAW_INPUT(si -> {
 			final actions = si.get(MENU);

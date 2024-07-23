@@ -145,7 +145,8 @@ class SelectState extends State {
 					row = Std.int(i / maxCols);
 					col = i % maxCols;
 					positionHighlight();
-				}
+				},
+				onSelect : select
 			};
 			ecs.setComponents(ecs.createEntity(), int);
 		}
@@ -157,6 +158,7 @@ class SelectState extends State {
 				if (byType) {
 					byType = false;
 					selection.anim.play(byType ? "5" : "0");
+					positionHighlight();
 				}
 			}
 		};
@@ -170,7 +172,30 @@ class SelectState extends State {
 				if (!byType) {
 					byType = true;
 					selection.anim.play(byType ? "5" : "0");
+					positionHighlight();
 				}
+			}
+		};
+		
+		ecs.setComponents(ecs.createEntity(), int);
+		
+		int = {
+			shape : Rect.fromTL(selection.sprite.x + 88, selection.sprite.y + 368, 18, 18),
+			enabled : true,
+			onSelect : () -> {
+				setColumn(col - maxCols);
+				positionHighlight();
+			}
+		};
+		
+		ecs.setComponents(ecs.createEntity(), int);
+		
+		int = {
+			shape : Rect.fromTL(selection.sprite.x + 432, selection.sprite.y + 368, 18, 18),
+			enabled : true,
+			onSelect : () -> {
+				setColumn(col + maxCols);
+				positionHighlight();
 			}
 		};
 		
@@ -178,7 +203,6 @@ class SelectState extends State {
 		
 		Command.queueMany(
 			ADD_TO(bg, ParentID.S2D, LayerID.BG),
-			ADD_UPDATER(entity, Timing.every(1 / 60, update)),
 			PLAY(Res.load("music/Trophy_Gallery.ogg").toSound(), {
 				type : MUSIC,
 				loop : true,
@@ -196,7 +220,7 @@ class SelectState extends State {
 		ecs.deleteEntity(entity);
 	}
 	
-	function update() {
+	override public function update() {
 		
 		Command.now(InputCommand.RAW_INPUT(handleInput));
 	}
@@ -206,52 +230,12 @@ class SelectState extends State {
 		final actions = si.get(InputID.MENU);
 		
 		if (actions.justPressed.L) {
-			col--;
-			if (col < 0) {
-				col += maxCols;
-				selection.anim.play(
-					switch (selection.anim.name) {
-						case "0": "4";
-						case "1": "0";
-						case "2": "1";
-						case "3": "2";
-						case "4": "3";
-						case "5": "11";
-						case "6": "5";
-						case "7": "6";
-						case "8": "7";
-						case "9": "8";
-						case "10": "9";
-						case "11": "10";
-						default: "0";
-					}
-				);
-			}
+			setColumn(col - 1);
 			positionHighlight();
 		}
 		
 		else if (actions.justPressed.R) {
-			col++;
-			if (col >= maxCols) {
-				col -= maxCols;
-				selection.anim.play(
-					switch (selection.anim.name) {
-						case "0": "1";
-						case "1": "2";
-						case "2": "3";
-						case "3": "4";
-						case "4": "0";
-						case "5": "6";
-						case "6": "7";
-						case "7": "8";
-						case "8": "9";
-						case "9": "10";
-						case "10": "11";
-						case "11": "5";
-						default: "0";
-					}
-				);
-			}
+			setColumn(col + 1);
 			positionHighlight();
 		}
 		
@@ -269,18 +253,63 @@ class SelectState extends State {
 		if (actions.justPressed.PAGE_L || actions.justPressed.PAGE_R) {
 			byType = !byType;
 			selection.anim.play(byType ? "5" : "0");
+			Command.queue(
+				PLAY(Res.load("sfx/NEXT.ogg").toSound(), {
+					type : SFX,
+					volume : 1
+				})
+			);
 		}
 		
 		if (actions.justPressed.SELECT) {
-			
-			final name = byType ? namesByType[(Std.parseInt(selection.anim.name) - 5) * maxRows * maxCols + row * maxCols + col] : namesBySubspace[Std.parseInt(selection.anim.name) * maxRows * maxCols + row * maxCols + col];
-			if (name != null) {
-				Command.queueMany(
-					EXIT(SELECT_STATE),
-					ENTER(CREATURE_STATE),
-					TRIGGER("setCreature", name)
-				);
-			}
+			select();
+		}
+	}
+	
+	function setColumn(value:Int) {
+		
+		col = value;
+		
+		if (col < 0) {
+			col += maxCols;
+			selection.anim.play(
+				switch (selection.anim.name) {
+					case "0": "4";
+					case "1": "0";
+					case "2": "1";
+					case "3": "2";
+					case "4": "3";
+					case "5": "11";
+					case "6": "5";
+					case "7": "6";
+					case "8": "7";
+					case "9": "8";
+					case "10": "9";
+					case "11": "10";
+					default: "0";
+				}
+			);
+		}
+		
+		else if (col >= maxCols) {
+			col -= maxCols;
+			selection.anim.play(
+				switch (selection.anim.name) {
+					case "0": "1";
+					case "1": "2";
+					case "2": "3";
+					case "3": "4";
+					case "4": "0";
+					case "5": "6";
+					case "6": "7";
+					case "7": "8";
+					case "8": "9";
+					case "9": "10";
+					case "10": "11";
+					case "11": "5";
+					default: "0";
+				}
+			);
 		}
 	}
 	
@@ -308,5 +337,29 @@ class SelectState extends State {
 		}
 		
 		if (highlight.anim.isReady) highlight.anim.play(frame);
+		
+		Command.queue(
+			PLAY(Res.load("sfx/NEXT.ogg").toSound(), {
+				type : SFX,
+				volume : 1
+			})
+		);
+	}
+	
+	function select() {
+		
+		final name = byType ? namesByType[(Std.parseInt(selection.anim.name) - 5) * maxRows * maxCols + row * maxCols + col] : namesBySubspace[Std.parseInt(selection.anim.name) * maxRows * maxCols + row * maxCols + col];
+		
+		if (name != null) {
+			Command.queueMany(
+				PLAY(Res.load("sfx/SELECT.ogg").toSound(), {
+					type : SFX,
+					volume : 1
+				}),
+				EXIT(SELECT_STATE),
+				ENTER(CREATURE_STATE),
+				TRIGGER("setCreature", name)
+			);
+		}
 	}
 }

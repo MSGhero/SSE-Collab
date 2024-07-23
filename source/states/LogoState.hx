@@ -75,10 +75,6 @@ class LogoState extends State {
 		#else
 		onVideoEnd();
 		#end
-		
-		Command.queueMany(
-			ADD_UPDATER(entity, Timing.every(1 / 60, update))
-		);
 	}
 	
 	override public function exit() {
@@ -91,11 +87,9 @@ class LogoState extends State {
 		if (video != null) video.remove();
 		
 		// add fadeout?
-		
-		Command.queue(STOP_BY_TYPE(MUSIC));
 	}
 	
-	function update() {
+	override public function update() {
 		
 		if (videoEnded) {
 			
@@ -136,6 +130,11 @@ class LogoState extends State {
 				if (actions.justPressed.SELECT || actions.justPressed.MOUSE) {
 					awaitingInput = false;
 					Command.queueMany(
+						PLAY(Res.load("sfx/START.ogg").toSound(), {
+							type : SFX,
+							volume : 1
+						}),
+						STOP_BY_TYPE(MUSIC),
 						EXIT(LOGO_STATE),
 						ENTER(SELECT_STATE)
 					);

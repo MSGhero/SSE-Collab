@@ -1,5 +1,6 @@
 package states;
 
+import h2d.Text;
 import mono.state.StateCommand;
 import mono.audio.AudioCommand;
 import mono.input.Input;
@@ -27,6 +28,7 @@ class CreatureState extends State {
 	var creatureIndex:Int;
 	
 	var trophy:Proto;
+	var text:Text;
 	
 	var entity:Entity;
 	
@@ -62,18 +64,24 @@ class CreatureState extends State {
 		trophy.createSprite(S2D, FG);
 		trophy.createAnim("trophy");
 		trophy.add(ecs);
+		trophy.sprite.x = -100; trophy.sprite.y = -50;
 		
+		/*
 		creature = new Proto(ecs.createEntity());
 		creature.createSprite(S2D, FG);
 		creature.createAnim("", creatures[creatureIndex]);
 		creature.add(ecs);
 		creature.sprite.x = 275;
 		creature.sprite.y = 90;
+		*/
+		
+		text = new Text(hxd.res.DefaultFont.get());
+		text.text = "Test text";
 		
 		Command.queueMany(
 			ADD_TO(bgL, ParentID.S2D, LayerID.BG),
 			ADD_TO(bgR, ParentID.S2D, LayerID.BG),
-			ADD_UPDATER(entity, Timing.every(1 / 60, update)),
+			ADD_TO(text, ParentID.S2D, LayerID.FG),
 			ADD_UPDATER(entity, Timing.float(0.25, 0, 854, f -> {
 				bgL.x = f - 854;
 				bgR.x = 854 - f;
@@ -88,13 +96,13 @@ class CreatureState extends State {
 		bgR.remove();
 	}
 	
-	function update() {
+	override public function update() {
 		
 		Command.now(InputCommand.RAW_INPUT(handleInput));
 	}
 	
 	function onSetCreature(name:String) {
-		trace(name);
+		text.text = name;
 		// creature.anim.play(name);
 	}
 	

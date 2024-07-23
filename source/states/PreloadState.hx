@@ -54,19 +54,16 @@ class PreloadState extends State {
 			
 			// text = new Text(Res.fonts.aotf.toFont());
 			
-			final up = Timing.every(1 / 60, update, true);
-			
 			Command.queueMany(
 				DisplayListCommand.ADD_TO(bm, ParentID.S2D, LayerID.BG),
-				// DisplayListCommand.ADD_TO(text, ParentID.S2D, LayerID.FG),
-				TimingCommand.ADD_UPDATER(entity, up)
+				// DisplayListCommand.ADD_TO(text, ParentID.S2D, LayerID.FG)
 			);
 			
 			Pak.load(["assets.pak"], null, () -> {
 				
 				trace("assets loaded");
 				
-				up.paused = true;
+				active = false;
 				// text.remove();
 				
 				bm.x = bm.y = 0;
@@ -101,7 +98,7 @@ class PreloadState extends State {
 		ecs.deleteEntity(entity);
 	}
 	
-	function update() {
+	override public function update() {
 		bm.rotation += 15 / 360 * 3.14;
 		// update text...
 	}
