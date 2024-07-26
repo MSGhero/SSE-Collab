@@ -88,22 +88,14 @@ class Mono extends AMono {
 		var mmap = DefaultMappings.getDefaultMouse();
 		input.addDevice(new MouseInput(mmap));
 		
-		var game = new GameState(ecs);
 		var preload = new PreloadState(ecs);
-		var logo = new LogoState(ecs);
-		var creature = new CreatureState(ecs);
-		var select = new SelectState(ecs);
 		
 		Command.queueMany(
 			ADD_PARENT(stage.s2d, S2D),
 			ADD_INPUT(input, MENU),
 			REGISTER_INPUT(ecs.createEntity(), MENU),
-			REGISTER_STATE(game, GAME_STATE),
 			REGISTER_STATE(preload, PRELOAD_STATE),
 			REGISTER_EXIT(PRELOAD_STATE, postPreload),
-			REGISTER_STATE(creature, CREATURE_STATE),
-			REGISTER_STATE(select, SELECT_STATE),
-			REGISTER_STATE(logo, LOGO_STATE),
 			ENTER(PRELOAD_STATE),
 		);
 		
@@ -121,9 +113,18 @@ class Mono extends AMono {
 		
 		// init states should all go in here too
 		
+		var game = new GameState(ecsRef);
+		var logo = new LogoState(ecsRef);
+		var creature = new CreatureState(ecsRef);
+		var select = new SelectState(ecsRef);
+		
 		Command.queueMany(
 			ADD_SHEET(sprites, SheetID.SPRITES),
 			PARSE_ANIMS(["specs/ui.txt"], SPRITES),
+			REGISTER_STATE(game, GAME_STATE),
+			REGISTER_STATE(creature, CREATURE_STATE),
+			REGISTER_STATE(select, SELECT_STATE),
+			REGISTER_STATE(logo, LOGO_STATE),
 			ENTER(LOGO_STATE),
 			ENTER(GAME_STATE)
 		);

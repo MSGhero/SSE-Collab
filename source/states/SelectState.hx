@@ -27,12 +27,16 @@ class SelectState extends State {
 	
 	var selection:Proto;
 	var highlight:Proto;
+	var buttons:Array<Interactive>;
 	var byType:Bool;
 	
 	var row:Int;
 	var col:Int;
 	final maxRows:Int = 4;
 	final maxCols:Int = 3;
+	
+	final selectionX:Int = 158;
+	final selectionY:Int = 42;
 	
 	var entity:Entity;
 	
@@ -102,6 +106,78 @@ class SelectState extends State {
 	
 	public function init() {
 		
+		bg = new Bitmap(Res.load("bgs/BACKGROUND-A.png").toTile());
+		
+		buttons = [];
+		
+		for (i in 0...12) {
+			var int:Interactive = {
+				shape : Rect.fromTL(2 + selectionX + (i % maxCols) * 168, 78 + selectionY + Std.int(i / maxCols) * 67, 168, 67),
+				enabled : false,
+				onOver : () -> {
+					row = Std.int(i / maxCols);
+					col = i % maxCols;
+					positionHighlight();
+				},
+				onSelect : select
+			};
+			ecs.setComponents(ecs.createEntity(), int);
+			buttons.push(int);
+		}
+		
+		var int:Interactive = {
+			shape : Rect.fromTL(selectionX, selectionY, 200, 32),
+			enabled : false,
+			onSelect : () -> {
+				if (byType) {
+					byType = false;
+					selection.anim.play(byType ? "5" : "0");
+					positionHighlight();
+				}
+			}
+		};
+		
+		ecs.setComponents(ecs.createEntity(), int);
+		buttons.push(int);
+		
+		int = {
+			shape : Rect.fromTL(selectionX + 200, selectionY, 200, 32),
+			enabled : false,
+			onSelect : () -> {
+				if (!byType) {
+					byType = true;
+					selection.anim.play(byType ? "5" : "0");
+					positionHighlight();
+				}
+			}
+		};
+		
+		ecs.setComponents(ecs.createEntity(), int);
+		buttons.push(int);
+		
+		int = {
+			shape : Rect.fromTL(selectionX + 88, selectionY + 368, 18, 18),
+			enabled : false,
+			onSelect : () -> {
+				setColumn(col - maxCols);
+				positionHighlight();
+			}
+		};
+		
+		ecs.setComponents(ecs.createEntity(), int);
+		buttons.push(int);
+		
+		int = {
+			shape : Rect.fromTL(selectionX + 432, selectionY + 368, 18, 18),
+			enabled : false,
+			onSelect : () -> {
+				setColumn(col + maxCols);
+				positionHighlight();
+			}
+		};
+		
+		ecs.setComponents(ecs.createEntity(), int);
+		buttons.push(int);
 	}
 	
 	public function destroy() {
@@ -119,15 +195,13 @@ class SelectState extends State {
 		
 		entity = ecs.createEntity();
 		
-		bg = new Bitmap(Res.load("bgs/BACKGROUND-A.png").toTile());
-		
 		row = col = 0;
 		
 		selection = new Proto(ecs.createEntity());
 		selection.createSprite(S2D, FG);
 		selection.createAnim("selection", "0");
 		selection.add(ecs);
-		selection.sprite.x = 158; selection.sprite.y = 42;
+		selection.sprite.x = selectionX; selection.sprite.y = selectionY;
 		
 		highlight = new Proto(ecs.createEntity());
 		highlight.createSprite(S2D, FG);
@@ -137,69 +211,7 @@ class SelectState extends State {
 		
 		byType = false;
 		
-		for (i in 0...12) {
-			var int:Interactive = {
-				shape : Rect.fromTL(2 + selection.sprite.x + (i % maxCols) * 168, 78 + selection.sprite.y + Std.int(i / maxCols) * 67, 168, 67),
-				enabled : true,
-				onOver : () -> {
-					row = Std.int(i / maxCols);
-					col = i % maxCols;
-					positionHighlight();
-				},
-				onSelect : select
-			};
-			ecs.setComponents(ecs.createEntity(), int);
-		}
-		
-		var int:Interactive = {
-			shape : Rect.fromTL(selection.sprite.x, selection.sprite.y, 200, 32),
-			enabled : true,
-			onSelect : () -> {
-				if (byType) {
-					byType = false;
-					selection.anim.play(byType ? "5" : "0");
-					positionHighlight();
-				}
-			}
-		};
-		
-		ecs.setComponents(ecs.createEntity(), int);
-		
-		int = {
-			shape : Rect.fromTL(selection.sprite.x + 200, selection.sprite.y, 200, 32),
-			enabled : true,
-			onSelect : () -> {
-				if (!byType) {
-					byType = true;
-					selection.anim.play(byType ? "5" : "0");
-					positionHighlight();
-				}
-			}
-		};
-		
-		ecs.setComponents(ecs.createEntity(), int);
-		
-		int = {
-			shape : Rect.fromTL(selection.sprite.x + 88, selection.sprite.y + 368, 18, 18),
-			enabled : true,
-			onSelect : () -> {
-				setColumn(col - maxCols);
-				positionHighlight();
-			}
-		};
-		
-		ecs.setComponents(ecs.createEntity(), int);
-		
-		int = {
-			shape : Rect.fromTL(selection.sprite.x + 432, selection.sprite.y + 368, 18, 18),
-			enabled : true,
-			onSelect : () -> {
-				setColumn(col + maxCols);
-				positionHighlight();
-			}
-		};
-		
-		ecs.setComponents(ecs.createEntity(), int);
+		for (b in buttons) b.enabled = true;
 		
 		Command.queueMany(
 			ADD_TO(bg, ParentID.S2D, LayerID.BG),
@@ -218,6 +230,8 @@ class SelectState extends State {
 		selection.remove(ecs);
 		highlight.remove(ecs);
 		ecs.deleteEntity(entity);
+		
+		for (b in buttons) b.enabled = false;
 	}
 	
 	override public function update() {
@@ -263,6 +277,18 @@ class SelectState extends State {
 		
 		if (actions.justPressed.SELECT) {
 			select();
+		}
+		
+		else if (actions.justPressed.DESELECT) {
+			Command.queueMany(
+				STOP_BY_TYPE(MUSIC),
+				PLAY(Res.load("sfx/BACK.ogg").toSound(), {
+					type : SFX,
+					volume : 1
+				}),
+				EXIT(SELECT_STATE),
+				ENTER(LOGO_STATE)
+			);
 		}
 	}
 	
@@ -315,7 +341,7 @@ class SelectState extends State {
 	
 	function positionHighlight() {
 		
-		highlight.sprite.x = 2 + selection.sprite.x + col * 168; highlight.sprite.y = 78 + selection.sprite.y + row * 67;
+		highlight.sprite.x = 2 + selectionX + col * 168; highlight.sprite.y = 78 + selectionY + row * 67;
 		var frame = "";
 		
 		if (col <= 0) {

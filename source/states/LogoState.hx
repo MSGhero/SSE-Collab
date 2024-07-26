@@ -32,6 +32,12 @@ class LogoState extends State {
 	
 	public function init() {
 		
+		bm = new Bitmap(Res.load("logo/LOGO (FULL).png").toTile());
+		fg = new Bitmap(Res.load("logo/BACKGROUND 4.png").toTile());
+		
+		bg = new Bitmap(Res.load("logo/BACKGROUND 1.png").toTile());
+		bg.addShader(new UVScroll(0.1, 0));
+		bg.tileWrap = true;
 	}
 	
 	public function destroy() {
@@ -48,11 +54,6 @@ class LogoState extends State {
 		trace("logo state");
 		
 		entity = ecs.createEntity();
-		bm = new Bitmap(Res.load("logo/LOGO (FULL).png").toTile());
-		fg = new Bitmap(Res.load("logo/BACKGROUND 4.png").toTile());
-		bg = new Bitmap(Res.load("logo/BACKGROUND 1.png").toTile());
-		bg.addShader(new UVScroll(0.1, 0));
-		bg.tileWrap = true;
 		
 		#if js
 		video = new Video();
@@ -84,7 +85,11 @@ class LogoState extends State {
 		bm.remove();
 		fg.remove();
 		bg.remove();
-		if (video != null) video.remove();
+		
+		if (video != null) {
+			video.remove();
+			video.dispose();
+		}
 		
 		// add fadeout?
 	}
