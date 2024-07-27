@@ -9,8 +9,6 @@ import mono.input.Input;
 import haxe.ds.StringMap;
 import IDs.InputID;
 import mono.input.InputCommand;
-import mono.timing.Timing;
-import mono.timing.TimingCommand;
 import proto.Proto;
 import IDs.LayerID;
 import IDs.ParentID;
@@ -40,7 +38,7 @@ class SelectState extends State {
 	
 	var entity:Entity;
 	
-	final namesBySubspace:Array<String> = [
+	public static final namesBySubspace:Array<String> = [
 		"primid", "sword primid", "boom primid",
 		"scope primid", "big primid", "metal primid",
 		"fire primid", "glire", "glice",
@@ -67,7 +65,7 @@ class SelectState extends State {
 		"meta ridley", "ancient minister", null
 	];
 	
-	final namesByType:Array<String> = [
+	public static final namesByType:Array<String> = [
 		"primid", "sword primid", "boom primid",
 		"scope primid", "big primid", "metal primid",
 		"fire primid", null, null,

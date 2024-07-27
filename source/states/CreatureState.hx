@@ -34,7 +34,7 @@ class CreatureState extends State {
 	
 	public function init() {
 		
-		creatures = ["cymul"];
+		creatures = SelectState.namesByType.filter(f -> f != null); // get rid of placeholder nulls
 		
 		Command.queue(REGISTER_TRIGGER("setCreature", onSetCreature));
 	}
@@ -66,14 +66,10 @@ class CreatureState extends State {
 		trophy.add(ecs);
 		trophy.sprite.x = -100; trophy.sprite.y = -50;
 		
-		/*
 		creature = new Proto(ecs.createEntity());
 		creature.createSprite(S2D, FG);
-		creature.createAnim("", creatures[creatureIndex]);
+		creature.createAnim("creature", creatures[creatureIndex]);
 		creature.add(ecs);
-		creature.sprite.x = 275;
-		creature.sprite.y = 90;
-		*/
 		
 		text = new Text(hxd.res.DefaultFont.get());
 		text.text = "Test text";
@@ -102,24 +98,30 @@ class CreatureState extends State {
 	}
 	
 	function onSetCreature(name:String) {
+		
+		if (name == null) return;
+		
 		text.text = name;
-		// creature.anim.play(name);
+		creature.anim.play(name);
+		
+		final trophyX = 200, trophyY = 400;
+		creature.sprite.x = trophyX - creature.sprite.tile.width / 2;
+		creature.sprite.y = trophyY - creature.sprite.tile.height;
 	}
 	
 	function handleInput(si:StringMap<Input>) {
 		
 		final actions = si.get(InputID.MENU);
-		/*
+		
 		if (actions.justPressed.L) {
 			creatureIndex--;
 			while (creatureIndex < 0) creatureIndex += creatures.length;
-			creature.anim.play(creatures[creatureIndex]);
+			onSetCreature(creatures[creatureIndex]);
 		}
 		
 		else if (actions.justPressed.R) {
 			creatureIndex = (creatureIndex + 1) % creatures.length;
-			creature.anim.play(creatures[creatureIndex]);
+			onSetCreature(creatures[creatureIndex]);
 		}
-		*/
 	}
 }
