@@ -212,12 +212,7 @@ class SelectState extends State {
 		for (b in buttons) b.enabled = true;
 		
 		Command.queueMany(
-			ADD_TO(bg, ParentID.S2D, LayerID.BG),
-			PLAY(Res.load("music/Trophy_Gallery.ogg").toSound(), {
-				type : MUSIC,
-				loop : true,
-				volume : 1.0
-			})
+			ADD_TO(bg, ParentID.S2D, LayerID.BG)
 		);
 	}
 	

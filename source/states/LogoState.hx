@@ -141,7 +141,12 @@ class LogoState extends State {
 						}),
 						STOP_BY_TYPE(MUSIC),
 						EXIT(LOGO_STATE),
-						ENTER(SELECT_STATE)
+						ENTER(SELECT_STATE),
+						PLAY(Res.load("music/Trophy_Gallery.ogg").toSound(), {
+							type : MUSIC,
+							loop : true,
+							volume : 1.0
+						})
 					);
 				}
 			}));

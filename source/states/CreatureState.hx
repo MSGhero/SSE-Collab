@@ -1,5 +1,6 @@
 package states;
 
+import IDs.StateID;
 import h2d.Text;
 import mono.state.StateCommand;
 import mono.audio.AudioCommand;
@@ -36,6 +37,13 @@ class CreatureState extends State {
 		
 		creatures = SelectState.namesByType.filter(f -> f != null); // get rid of placeholder nulls
 		
+		bgL = new Bitmap(Res.load("bgs/BACKGROUND-B-1.png").toTile());
+		bgR = new Bitmap(Res.load("bgs/BACKGROUND-B-2.png").toTile());
+		bgR.y = 388;
+		
+		text = new Text(hxd.res.DefaultFont.get());
+		text.text = "Test text";
+		
 		Command.queue(REGISTER_TRIGGER("setCreature", onSetCreature));
 	}
 	
@@ -54,10 +62,6 @@ class CreatureState extends State {
 		
 		entity = ecs.createEntity();
 		
-		bgL = new Bitmap(Res.load("bgs/BACKGROUND-B-1.png").toTile());
-		bgR = new Bitmap(Res.load("bgs/BACKGROUND-B-2.png").toTile());
-		bgR.y = 388;
-		
 		creatureIndex = 0;
 		
 		trophy = new Proto(ecs.createEntity());
@@ -70,9 +74,6 @@ class CreatureState extends State {
 		creature.createSprite(S2D, FG);
 		creature.createAnim("creature", creatures[creatureIndex]);
 		creature.add(ecs);
-		
-		text = new Text(hxd.res.DefaultFont.get());
-		text.text = "Test text";
 		
 		Command.queueMany(
 			ADD_TO(bgL, ParentID.S2D, LayerID.BG),
@@ -90,6 +91,12 @@ class CreatureState extends State {
 		
 		bgL.remove();
 		bgR.remove();
+		text.remove();
+		
+		trophy.remove(ecs);
+		creature.remove(ecs);
+		
+		ecs.deleteEntity(entity);
 	}
 	
 	override public function update() {
@@ -104,7 +111,7 @@ class CreatureState extends State {
 		text.text = name;
 		creature.anim.play(name);
 		
-		final trophyX = 200, trophyY = 400;
+		final trophyX = 260, trophyY = 400;
 		creature.sprite.x = trophyX - creature.sprite.tile.width / 2;
 		creature.sprite.y = trophyY - creature.sprite.tile.height;
 	}
@@ -117,11 +124,30 @@ class CreatureState extends State {
 			creatureIndex--;
 			while (creatureIndex < 0) creatureIndex += creatures.length;
 			onSetCreature(creatures[creatureIndex]);
+			Command.queue(PLAY(Res.load("sfx/NEXT.ogg").toSound(), {
+				type : SFX,
+				volume : 1
+			}));
 		}
 		
 		else if (actions.justPressed.R) {
 			creatureIndex = (creatureIndex + 1) % creatures.length;
 			onSetCreature(creatures[creatureIndex]);
+			Command.queue(PLAY(Res.load("sfx/NEXT.ogg").toSound(), {
+				type : SFX,
+				volume : 1
+			}));
+		}
+		
+		if (actions.justPressed.DESELECT) {
+			Command.queueMany(
+				PLAY(Res.load("sfx/BACK.ogg").toSound(), {
+					type : SFX,
+					volume : 1
+				}),
+				EXIT(CREATURE_STATE),
+				ENTER(SELECT_STATE)
+			);
 		}
 	}
 }
