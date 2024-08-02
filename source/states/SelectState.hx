@@ -199,7 +199,7 @@ class SelectState extends State {
 		selection.createSprite(S2D, FG);
 		selection.createAnim("selection", "0");
 		selection.add(ecs);
-		selection.sprite.x = selectionX; selection.sprite.y = selectionY;
+		// selection.sprite.x = selectionX; selection.sprite.y = selectionY;
 		
 		highlight = new Proto(ecs.createEntity());
 		highlight.createSprite(S2D, FG);
@@ -219,7 +219,6 @@ class SelectState extends State {
 	override public function exit() {
 		super.exit();
 		
-		bg.remove();
 		selection.remove(ecs);
 		highlight.remove(ecs);
 		ecs.deleteEntity(entity);
@@ -273,6 +272,7 @@ class SelectState extends State {
 		}
 		
 		else if (actions.justPressed.DESELECT) {
+			bg.remove();
 			Command.queueMany(
 				STOP_BY_TYPE(MUSIC),
 				PLAY(Res.load("sfx/BACK.ogg").toSound(), {

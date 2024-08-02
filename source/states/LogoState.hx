@@ -67,7 +67,8 @@ class LogoState extends State {
 				ADD_TO(video, S2D, FG),
 				PLAY(Res.load("sfx/LOGO.ogg").toSound(), {
 					type : SFX,
-					loop : false
+					loop : false,
+					volume : 0.7
 				})
 			);
 		});
@@ -137,7 +138,7 @@ class LogoState extends State {
 					Command.queueMany(
 						PLAY(Res.load("sfx/START.ogg").toSound(), {
 							type : SFX,
-							volume : 1
+							volume : 0.7
 						}),
 						STOP_BY_TYPE(MUSIC),
 						EXIT(LOGO_STATE),

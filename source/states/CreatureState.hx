@@ -111,9 +111,11 @@ class CreatureState extends State {
 		text.text = name;
 		creature.anim.play(name);
 		
-		final trophyX = 260, trophyY = 400;
+		final trophyX = 254, trophyY = 380;
 		creature.sprite.x = trophyX - creature.sprite.tile.width / 2;
 		creature.sprite.y = trophyY - creature.sprite.tile.height;
+		
+		creatureIndex = creatures.indexOf(name);
 	}
 	
 	function handleInput(si:StringMap<Input>) {
