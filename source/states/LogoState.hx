@@ -112,7 +112,7 @@ class LogoState extends State {
 					PLAY(Res.load("music/Save Point.ogg").toSound(), {
 						type : MUSIC,
 						loop : true,
-						volume : 1.0
+						volume : 0.8
 					}),
 					FADE(2, 0, 1, null, "music")
 				);
@@ -138,7 +138,7 @@ class LogoState extends State {
 					Command.queueMany(
 						PLAY(Res.load("sfx/START.ogg").toSound(), {
 							type : SFX,
-							volume : 0.7
+							volume : 0.5
 						}),
 						STOP_BY_TYPE(MUSIC),
 						EXIT(LOGO_STATE),

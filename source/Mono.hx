@@ -63,12 +63,12 @@ class Mono extends AMono {
 						InteractiveSystem, // leave this before inputsys to correctly handle touch inputs
 						InputSystem,
 						MouseSystem,
-						StateSystem,
 						RenderSystem,
 						AnimSystem,
 						TimingSystem,
 						AudioSystem,
-						CommandSystem // we usually want this to be the final system
+						CommandSystem,
+						StateSystem,
 					]
 				}
 			]

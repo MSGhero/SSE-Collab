@@ -79,7 +79,7 @@ class CreatureState extends State {
 			ADD_TO(bgL, ParentID.S2D, LayerID.BG),
 			ADD_TO(bgR, ParentID.S2D, LayerID.BG),
 			ADD_TO(text, ParentID.S2D, LayerID.FG),
-			ADD_UPDATER(entity, Timing.float(0.25, 0, 854, f -> {
+			ADD_UPDATER(entity, Timing.float(0.1, 0, 854, f -> {
 				bgL.x = f - 854;
 				bgR.x = 854 - f;
 			}))
@@ -110,10 +110,6 @@ class CreatureState extends State {
 		
 		text.text = name;
 		creature.anim.play(name);
-		
-		final trophyX = 254, trophyY = 380;
-		creature.sprite.x = trophyX - creature.sprite.tile.width / 2;
-		creature.sprite.y = trophyY - creature.sprite.tile.height;
 		
 		creatureIndex = creatures.indexOf(name);
 	}
