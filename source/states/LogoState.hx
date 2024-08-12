@@ -135,20 +135,30 @@ class LogoState extends State {
 				
 				if (actions.justPressed.SELECT || actions.justPressed.MOUSE) {
 					awaitingInput = false;
-					Command.queueMany(
-						PLAY(Res.load("sfx/START.ogg").toSound(), {
-							type : SFX,
-							volume : 0.5
-						}),
-						STOP_BY_TYPE(MUSIC),
-						EXIT(LOGO_STATE),
-						ENTER(SELECT_STATE),
-						PLAY(Res.load("music/Trophy_Gallery.ogg").toSound(), {
-							type : MUSIC,
-							loop : true,
-							volume : 1.0
-						})
-					);
+					
+					final ft = new FloatTweener(0.75, 1, 0, f -> {
+						bg.alpha = fg.alpha = bm.alpha = f;
+					});
+					
+					ft.onComplete = () -> {
+						Command.queueMany(
+							PLAY(Res.load("sfx/START.ogg").toSound(), {
+								type : SFX,
+								volume : 0.5
+							}),
+							STOP_BY_TYPE(MUSIC),
+							EXIT(LOGO_STATE),
+							ENTER(SELECT_STATE),
+							PLAY(Res.load("music/Trophy_Gallery.ogg").toSound(), { // so that it continues playing during CR->SEL transition
+								type : MUSIC,
+								loop : true,
+								volume : 1.0
+							}),
+							TRIGGER("selFadeIn", "")
+						);
+					};
+					
+					Command.queue(ADD_UPDATER(entity, ft));
 				}
 			}));
 		}

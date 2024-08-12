@@ -1,5 +1,7 @@
 package states;
 
+import mono.timing.TimingCommand;
+import mono.timing.FloatTweener;
 import mono.geom.Rect;
 import mono.interactive.Interactive;
 import IDs.StateID;
@@ -176,6 +178,8 @@ class SelectState extends State {
 		
 		ecs.setComponents(ecs.createEntity(), int);
 		buttons.push(int);
+		
+		Command.queue(REGISTER_TRIGGER("selFadeIn", onFadeIn));
 	}
 	
 	public function destroy() {
@@ -208,6 +212,8 @@ class SelectState extends State {
 		positionHighlight();
 		
 		byType = false;
+		
+		bg.alpha = selection.sprite.alpha = highlight.sprite.alpha = 0;
 		
 		for (b in buttons) b.enabled = true;
 		
@@ -272,6 +278,14 @@ class SelectState extends State {
 		}
 		
 		else if (actions.justPressed.DESELECT) {
+			
+			
+			// fade
+			
+			
+			
+			
+			
 			bg.remove();
 			Command.queueMany(
 				STOP_BY_TYPE(MUSIC),
@@ -283,6 +297,15 @@ class SelectState extends State {
 				ENTER(LOGO_STATE)
 			);
 		}
+	}
+	
+	function onFadeIn(_) {
+		
+		final ft = new FloatTweener(0.75, 0, 1, f -> {
+			bg.alpha = selection.sprite.alpha = highlight.sprite.alpha = f;
+		});
+		
+		Command.queue(ADD_UPDATER(entity, ft));
 	}
 	
 	function setColumn(value:Int) {

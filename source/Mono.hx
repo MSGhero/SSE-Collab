@@ -52,7 +52,6 @@ class Mono extends AMono {
 		
 		stage.engine.backgroundColor = 0xff000000;
 		
-		// possible that this should go before the preloader
 		final ecs = ecsRef = Universe.create({
 			entities : 100,
 			phases : [
