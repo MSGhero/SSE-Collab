@@ -1,5 +1,7 @@
 package states;
 
+import haxe.DynamicAccess;
+import haxe.Json;
 import IDs.StateID;
 import h2d.Text;
 import mono.state.StateCommand;
@@ -29,7 +31,9 @@ class CreatureState extends State {
 	var creatureIndex:Int;
 	
 	var trophy:Proto;
+	var nameText:Text;
 	var text:Text;
+	var infoMap:StringMap<CreatureInfo>;
 	
 	var entity:Entity;
 	
@@ -41,10 +45,27 @@ class CreatureState extends State {
 		bgR = new Bitmap(Res.load("bgs/BACKGROUND-B-2.png").toTile());
 		bgR.y = 388;
 		
+		nameText = new Text(hxd.res.DefaultFont.get());
+		nameText.text = "Test text";
+		nameText.x = 600; nameText.y = 50;
+		
 		text = new Text(hxd.res.DefaultFont.get());
 		text.text = "Test text";
+		text.x = 600; text.y = 150;
+		text.maxWidth = 200;
 		
 		Command.queue(REGISTER_TRIGGER("setCreature", onSetCreature));
+		
+		infoMap = new StringMap();
+		var json:Array<DynamicAccess<Dynamic>> = Json.parse(Res.load("specs/Subspace Text.json").toText());
+		for (d in json) {
+			infoMap.set(d.get("image"), {
+				title : d.get("title"),
+				artist : d.get("artist"),
+				description : d.get("description"),
+				profiles : d.get("profile")
+			});
+		}
 	}
 	
 	public function destroy() {
@@ -78,6 +99,7 @@ class CreatureState extends State {
 		Command.queueMany(
 			ADD_TO(bgL, ParentID.S2D, LayerID.BG),
 			ADD_TO(bgR, ParentID.S2D, LayerID.BG),
+			ADD_TO(nameText, ParentID.S2D, LayerID.FG),
 			ADD_TO(text, ParentID.S2D, LayerID.FG),
 			ADD_UPDATER(entity, Timing.float(0.1, 0, 854, f -> {
 				bgL.x = f - 854;
@@ -91,6 +113,7 @@ class CreatureState extends State {
 		
 		bgL.remove();
 		bgR.remove();
+		nameText.remove();
 		text.remove();
 		
 		trophy.remove(ecs);
@@ -108,7 +131,11 @@ class CreatureState extends State {
 		
 		if (name == null) return;
 		
-		text.text = name;
+		var cr = infoMap.get(name);
+		
+		nameText.text = cr.title;
+		text.text = cr.description;
+		
 		creature.anim.play(name);
 		
 		creatureIndex = creatures.indexOf(name);
@@ -148,4 +175,12 @@ class CreatureState extends State {
 			);
 		}
 	}
+}
+
+@:structInit
+private class CreatureInfo {
+	public final title:String;
+	public final artist:String;
+	public final description:String;
+	public final profiles:Array<String>;
 }

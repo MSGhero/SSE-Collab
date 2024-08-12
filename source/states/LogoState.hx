@@ -75,6 +75,8 @@ class LogoState extends State {
 		
 		awaitingInput = false;
 		#else
+		videoEnded = false;
+		awaitingInput = false;
 		onVideoEnd();
 		#end
 	}
@@ -104,7 +106,7 @@ class LogoState extends State {
 			bg.alpha = fg.alpha = 0;
 			
 			final ft = new FloatTweener(0.75, 0, 1, f -> {
-				bg.alpha = fg.alpha = f;
+				bg.alpha = fg.alpha = bm.alpha = f;
 			});
 			
 			ft.onComplete = () -> {
@@ -142,10 +144,6 @@ class LogoState extends State {
 					
 					ft.onComplete = () -> {
 						Command.queueMany(
-							PLAY(Res.load("sfx/START.ogg").toSound(), {
-								type : SFX,
-								volume : 0.5
-							}),
 							STOP_BY_TYPE(MUSIC),
 							EXIT(LOGO_STATE),
 							ENTER(SELECT_STATE),
@@ -158,7 +156,13 @@ class LogoState extends State {
 						);
 					};
 					
-					Command.queue(ADD_UPDATER(entity, ft));
+					Command.queueMany(
+						PLAY(Res.load("sfx/START.ogg").toSound(), {
+							type : SFX,
+							volume : 0.5
+						}),
+						ADD_UPDATER(entity, ft)
+					);
 				}
 			}));
 		}

@@ -1,0 +1,416 @@
+
+[
+	{
+      "title": "Primid",
+      "image": "primid",
+      "artist": "ShockAbe",
+      "description": "The common soldier of the Subspace Army. It seems pretty harmless, but alas, it's stuffed with Shadow Bugs that leak from its forms. This Primid has no weapons--it will challenge you man-to-man. There are six different Primid types, but all of them are based on this basic form. There are also several different face types.",
+      "profile": ["https://shockabe.newgrounds.com"]
+    },
+    {
+      "title": "Sword Primid",
+      "image": "sword primid",
+      "artist": "Sprunkzy",
+      "description": "A Primid with a sword, as the name suggests. A Sword Primid will generally attack with slashes, but that's not all! It'll also make charging stabs at you, so watch out even when you're a good distance away. It might just be because of the way its sword lights up, but doesn't it remind you of a tarmac worker at an airport?",
+      "profile": ["https://sprunkzy.newgrounds.com", "https://x.com/Arukad0u"]
+    },
+    {
+      "title": "Boom Primid",
+      "image": "boom primid",
+      "artist": "Chdonga",
+      "description": "A Primid with a boomerang--hence the name. This Primid will use the boomerang to attack from afar (which is pretty much what you'd expect) and adds to its arsenal with close-quarter combat strikes. These two attack patterns may lead you to believe that it has no fun with boomerangs, but no! Boom Primids are just a little on the shy side.",
+      "profile": ["https://chdonga.newgrounds.com"]
+    },
+    {
+      "title": "Scope Primid",
+      "image": "scope primid",
+      "artist": "Berlaysookabee",
+      "description": "A bazooka-wielding Primid. A Scope Primid uses weak, three-shot attacks and powerful, single-shot surge cannons. Due to its ability to also fire at targets above its position, you can't play it safe when a Scope Primid is down below you. Probably because of the weight of its weapon, it won't use its bazooka for direct strikes.",
+      "profile": ["https://berlaysookabee.newgrounds.com", "https://www.deviantart.com/berlaysookabee"]
+    },
+    {
+      "title": "Big Primid",
+      "image": "big primid",
+      "artist": "maawss-1p",
+      "description": "The biggest Primid of all. Its attacks are the same in form and function, but considerably more powerful than a normal Primid's. Watch out for its smash attack--it will launch you far. It also has jump and roll attacks. The bigger size means an increase in Shadow Bugs--does that mean it takes more Shadow Bugs to move bigger Primids?",
+      "profile": ["https://maawss-1p.newgrounds.com"]
+    },
+    {
+      "title": "Metal Primid",
+      "image": "metal primid",
+      "artist": "Potato-Turtle-Art",
+      "description": "A Primid covered from head to toe in metallic plating. It cannot be knocked around with conventional attacks due to its hard and heavy nature--we're talking ALL metal, including the frilly feather on its head. On the flip side, the weight of the metal inhibits this Primid's movements. Like a normal Primid, a Metal Primid will also rely on hand-to-hand combat.",
+      "profile": ["https://potato-turtle-art.newgrounds.com/"]
+    },
+    {
+      "title": "Fire Primid",
+      "image": "fire primid",
+      "artist": "Fish125",
+      "description": "A specialized, fire-breathing Primid with two flamethrowing attacks. Primids with weapons are just normal, armed Primids, but Fire Primids are a whole new species with a whole new color. Although no more special than the others, they may feel slightly more superior with their red-hot color. Dealing with these guys in a group can be especially tricky.",
+      "profile": ["https://fish125.newgrounds.com"]
+    },
+    {
+      "title": "Glire",
+      "image": "glire",
+      "artist": "Blaznthekid",
+      "description": "An enemy shaped like a tire. It's protected by three black shells, but they're not so hard as to be impenetrable. The outermost shell is covered in mucus that lets it stick to surfaces as it rolls along walls and ceilings. The eye in its center is creepy. When it spots the player, it stops, sheds its outer layers, and spouts fire from its inner recesses.",
+      "profile": ["https://blaznthekid.newgrounds.com"]
+    },
+    {
+      "title": "Glice",
+      "image": "glice",
+      "artist": "HapiToons",
+      "description": "A soldier in the Subspace Army that moves easily up walls and slopes alike. Like a Glire, it sheds its outer shells to attack, but it releases waves of bitter cold instead of fire. This attack will freeze the player in a lump of ice if it hits. To escape quickly, move the Control Stick rapidly back and forth. This combative enemy will attack whenever it can.",
+      "profile": ["https://hapitoons.newgrounds.com"]
+    },
+    {
+      "title": "Glunder",
+      "image": "glunder",
+      "artist": "Sunilla-Islander",
+      "description": "An enemy that separates into three parts, then blasts enemies with a high-tension current it produces within its body. When it's ready to attack, it will make a \"Bzzt!\" sound and produce a lightning flash. When this happens, approach with caution. This enemy type is color coded--Glires are red, Glices are blue, and Glunders are yellow. It's a family of destruction!",
+      "profile": ["https://sunilla-islander.newgrounds.com"]
+    },
+    {
+      "title": "Poppant",
+      "image": "poppant",
+      "artist": "SabbothArt",
+      "description": "A creature with a uniquely shaped lower body, where it carries boxes that look like gifts and candies. The boxes are even carefully tied with ribbons. It demonstrates its generosity by scattering its boxes as it wanders, but if it's seen, it will immediately flee at top speed. It redefines the word shy. No one knows why it spends its time scattering presents.",
+      "profile": ["https://sabbothart.newgrounds.com"]
+    },
+    {
+      "title": "Bytan",
+      "image": "bytan",
+      "artist": "PSYCHDLSH",
+      "description": "A spherical creature divided into two colors. There's a big, staring eye in the colored section, and the white part contains the creature's gaping mouth and exposed fangs. It rolls along and smashes into all enemies it meets. After a short time, it will pop another Bytan out of its eye, so if you leave it alone, it will continue to produce one Bytan after another.",
+      "profile": ["https://psychdlsh.newgrounds.com"]
+    },
+    {
+      "title": "Roader",
+      "image": "roader",
+      "artist": "theOve",
+      "description": "A Subspace Army enemy that looks like a motorized unicycle. It features an off-road motorbike helmet as a head, revealing creepy eyes that peek from under its visor. It attacks using three head spikes and its wheel and is clearly unconcerned with environmental conservation, since it wheels around freely spouting exhaust from its muffler.",
+      "profile": ["https://theove.newgrounds.com/"]
+    },
+    {
+      "title": "Bombed",
+      "image": "bombed",
+      "artist": "Yopenatals",
+      "description": "An enemy with a bomb for a head, as subtly suggested by the name. It hurls its own bomb head at you--at least it's kind enough to reveal the bomb fuse, which will light up when hit with a fire attack like Mario's fireball. Then...BOOM! This is an easy way to take it out. It's this weakness that sometimes makes them sad that, regrettably, they were born with bomb heads.",
+      "profile": ["https://yopenatals.newgrounds.com"]
+    },
+    {
+      "title": "Greap",
+      "image": "greap",
+      "artist": "widemouthink",
+      "description": "A terrifying enemy with two giant sickles. It uses these well-sharpened, slice-'em-and-dice-'em sickles for a fearsome attack. With a handle on its back, it almost looks like a baby carriage. Combining horrific qualities with this precious imagery gives the Greap a somewhat conflicted disposition, exuding both creepiness and cuteness.",
+      "profile": ["https://widemouthink.newgrounds.com"]
+    },
+    {
+      "title": "Bucculus",
+      "image": "bucculus",
+      "artist": "Glabsterii",
+      "description": "A Subspace Army enemy found firmly planted in the ground, with only its lips showing. These lips, by the way, are covered with spikes that stick in its victim to... (Get this!)...suck out vitality. Basically, this results in serious damage. The torso area has a poison zone where it stores vitality. The Bucculus not only looks offensive--boy, it's rotten to the core.",
+      "profile": ["https://glabsterii.newgrounds.com"]
+    },
+    {
+      "title": "TowTow",
+      "image": "towtow",
+      "artist": "TomDoy",
+      "description": "A giant, ramlike enemy and member of the Subspace Army. A Towtow looks adorable while sleeping, but when it's awakened, its angelic face changes dramatically. The features turn to demonic nastiness, and the Towtow's body turns bright red as it readies to ram you. Perhaps a result of its tantrum-hindered fashion sense, the Towtow sports a pompadour when angry.",
+      "profile": ["https://tomdoy.newgrounds.com"]
+    },
+    {
+      "title": "Floow",
+      "image": "floow",
+      "artist": "Biscuiti",
+      "description": "An enemy that might be described as a ghost patched with strips of darkness. A Floow will float in the air and attack nastily from behind. Harboring pent-up resentment, a Floow's cries reveal one part sadness, one part madness. This especially hits home when gazing into its ghastly red eyes. After taking a certain amount of damage, a Floow will disappear.",
+      "profile": ["https://biscuiti.newgrounds.com"]
+    },
+    {
+      "title": "Auroros",
+      "image": "auroros",
+      "artist": "Nazo_KG",
+      "description": "A unique enemy characterized by a long beak and rainbow-patterned wings and tail. Like most birds, the Auroros flies through the sky. Once one has you in its sights, it will dive in for the attack. Since it has a sharp beak, dodging its attack will leave it stuck firmly in the ground. Fortunately, you can pull it out of the ground and throw it like a javelin.",
+      "profile": ["https://kajag.newgrounds.com"]
+    },
+    {
+      "title": "Buckot",
+      "image": "buckot",
+      "artist": "ElectricKoatHanger",
+      "description": "An enemy with arms and a propeller attached to its head that it uses to...um...propel itself through the sky. It has a justified reputation as a dangerous dude with a bucket filled with red-hot iron chunks for dumping on folks. Some say that the phrase \"Drop it like it's hot!\" came from Buckot's firm belief in dropping scalding metal chunks. Good thing it has thick gloves.",
+      "profile": ["https://electrickoathanger.newgrounds.com"]
+    },
+    {
+      "title": "Jyx",
+      "image": "jyx",
+      "artist": "StylusBox",
+      "description": "A six-spiked enemy. Attacking a Jyk will do no damage, as they can't be defeated. But you'd better believe that a Jyk will deal out damage to you if you get too close. This foe epitomizes player-hindering obstacles--it gets in your way... and it hurts. It definitely isn't thought fondly of by the characters in the game. It may have something to do with its SHARP SPIKES! Ouch.",
+      "profile": ["https://stylusbox.newgrounds.com/"]
+    },
+    {
+      "title": "Gamyga",
+      "image": "gamyga",
+      "artist": "Alex-PhantomGlitch",
+      "description": "A Subspace Army enemy that looks like an avant-garde work of art from some young art-school grad. And its size is nothing to scoff at--sitting on top of a four-level Gamyga base is a huge Gamyga mask. You can eliminate the Gamyga base simply by beating the Gamyga mask. A Gamyga faces the screen, but it never takes its eyes off you. Ooh, spooky...in an artsy kind of way.",
+      "profile": ["https://alex-phantomglitch.newgrounds.com"]
+    },
+    {
+      "title": "Feyesh",
+      "image": "feyesh",
+      "artist": "Cpt-Mcn00b",
+      "description": "An enemy that, at first glance, looks like a goldfish, with a tail and dorsal fin. It turns out to be more crazy-eye creature than fish. (And what's with the funky dangling tentacle thingies?) Floating lazily through the air, a Feyesh usually looks like it's sleeping. BUT! When it spots you, its eye opens, and it attacks with its five tentacles. Gaahh! Attack of the Tentacles!",
+      "profile": ["https://cpt-mcn00b.newgrounds.com"]
+    },
+    {
+      "title": "Trowlon",
+      "image": "trowlon",
+      "artist": "NickHerf",
+      "description": "An enemy that, despite a mechanized look, is made up of a soft, specialized material that allows for smooth, undulating movement and flight. A Trowlon will not attack directly but will instead slip under the player and suddenly ascend. It will try to put players on its back and carry them off the screen.",
+      "profile": ["https://nickherf.newgrounds.com"]
+    },
+    {
+      "title": "Roturret",
+      "image": "roturret",
+      "artist": "MudHutGrug",
+      "description": "An enemy with a skeletal face at the center of its inner section that deals damage with a rotating attack. Despite a 360-degree attack range, it has a blind spot between its two cannons. It spins toward characters and shoots three shots at a time, spraying spent shells and occasionally reloading. This foe is pretty smart--it'll cease fire when you put up your guard.",
+      "profile": ["https://mudhutgrug.newgrounds.com"]
+    },
+    {
+      "title": "Spaak",
+      "image": "spaak",
+      "artist": "EtherealCoffee",
+      "description": "A Subspace Army member who is mostly cloud but also reveals mechanical parts, like electrodes and batteries. In most cases, a Spaak is white and fires lightning, but it turns into a dark cloud after taking damage and chases you with fast lightning strikes. Its weak point is the battery on its back--attacking that should make it pretty easy to take down.",
+      "profile": ["https://etherealcoffee.newgrounds.com"]
+    },
+    {
+      "title": "Puppit",
+      "image": "puppit",
+      "artist": "JadtheRad",
+      "description": "A marionette enemy, suspended from above by piano strings. A Puppit proves vicious with long, sharp claws and a mysterious beam emitted from its eyes. You would think, based on the exterior wood pattern, that it's made of wood, but no one is sure. More importantly, who is the one manipulating those piano strings?! What an enemy! Mystery abounds!",
+      "profile": ["https://jadtherad.newgrounds.com"]
+    },
+    {
+      "title": "Shaydas",
+      "image": "shaydas",
+      "artist": "TheDSGamer",
+      "description": "An odd enemy with two heads. Its legs might suggest that it's a beast of some sort, but in actuality, a Shaydas is formed by swarms of Shadow Bugs. Maybe that's why recklessly attacking it will do no good--you must strike its pink core to defeat it. Just watch out for the giant blades that it brings to the party. Mind the blades, and pick your attacks wisely!",
+      "profile": ["https://thedsgamer.newgrounds.com"]
+    },
+    {
+      "title": "Mites",
+      "image": "mites",
+      "artist": "Gribbus07",
+      "description": "Pitiful little enemies that carry the Subspace Army symbols right there on their heads--rather, the symbols ARE their heads! They're paper thin--nope, no depth at all. There are three different colors--red, green, and yellow--and all have white hands and feet. Their moves can best be described by the phrase \"try really hard.\" They're weak, but they...try really hard.",
+      "profile": ["https://gribbus07.newgrounds.com"]
+    },
+    {
+      "title": "Shellpod",
+      "image": "shellpod",
+      "artist": "CALDM2001",
+      "description": "An enemy reminiscent of a horned beetle. A Shellpod can exhibit extraordinary destructive power thanks to the strength generated in its beefy front legs and its threatening long horn. Taking a hit from this bad boy spells trouble. But what's the deal with the color difference between the Shellpod's legs and shell? Hmmm... Therein lies a seeeeeecret.",
+      "profile": ["https://caldm2001.newgrounds.com"]
+    },
+    {
+      "title": "Nagagog",
+      "image": "nagagog",
+      "artist": "Smamuelh",
+      "description": "An enemy that might be considered sumo-wrestler shaped, with a funky, decorative twirl on its head and a cute little mouth. As it takes damage, its body increases in size through three distinct levels. Wow, it's almost like a sumo wrestler climbing the ranks to become Yokozuna! Along with the size increase comes a change in color as well--blue, yellow, and red.",
+      "profile": ["https://smamuelh.newgrounds.com"]
+    },
+    {
+      "title": "Cymul",
+      "image": "cymul",
+      "artist": "SkilledFella",
+      "description": "First, notice the metallic sheen--a specialized coating that allows the Cymul to reflect beams and other long-range attacks. The reflected attacks are said to be as strong as a Reflector's, so it's believed that the coating is based on Reflector technology. Coating aside, the four blades attached to its body cannot be neglected--they will slice and dice and slice.",
+      "profile": ["https://skilledfella.newgrounds.com"]
+    },
+    {
+      "title": "Ticken",
+      "image": "ticken",
+      "artist": "iAmNickname",
+      "description": "An enemy that looks like a chicken--quite a hefty chicken. But despite its weight, it can indeed fly. After taking a certain amount of damage, a Ticken will open up to reveal a little chick enemy. Notice the two bolts on its belly? And what's the deal with the four missing bolts? It probably hasn't even noticed they're missing.",
+      "profile": ["https://iamnickname.newgrounds.com", "https://twitter.com/iamnicknameeee"]
+    },
+    {
+      "title": "Armight",
+      "image": "armight",
+      "artist": "drag0nfish",
+      "description": "A Subspace enemy. Look at the arms on this thing. It's also got an awfully fancy mustache! Without much of a body, Armight floats softly in the air--all arms, legs, and head. Resplendent in a nice armored helmet, Armight attacks with its arms and swords and will sometimes throw the latter at you unexpectedly.",
+      "profile": ["https://drag0nfish.newgrounds.com"]
+    },
+    {
+      "title": "Borboras",
+      "image": "borboras",
+      "artist": "PercodineArt",
+      "description": "A Subspace foe. Although humanoid in form, it's characterized by a head that resembles a wind instrument decorated on top with trumpet valves. It can be quite annoying--when it spots you, it'll blow you off balance with some serious wind from its mouth. And where does it get off, skipping around so cheerfully? I mean, who skips these days? Seriously.",
+      "profile": ["https://percodineart.newgrounds.com"]
+    },
+    {
+      "title": "Autolance",
+      "image": "autolance",
+      "artist": "4EVER-BOY",
+      "description": "An enemy that moves on caterpillar treads and uses the giant lance attached to its front to ram and sometimes shoot you. Looking for a weak spot? It's inside that armored-helmet head in the form of an emergency light. But... Autolances aren't Subspace Army emergency vehicles--why would they need an emergency light? Aah, the mystery!",
+      "profile": ["https://4ever-boy.newgrounds.com/"]
+    },
+    {
+      "title": "Armank",
+      "image": "armank",
+      "artist": "Frosty",
+      "description": "A brutal enemy in the Subspace Army or mobile construction equipment? Yes, it moves on treads and has a functional construction arm, but that arm is also capable of brutal attacks. Continue attacking the arm to reveal the Armank's weak spot. Wait... It looks like there's mud on the end of the arm! Maybe the Armank IS just a construction vehicle for the Subspace Army!",
+      "profile": ["https://frosty.newgrounds.com"]
+    },
+    {
+      "title": "R.O.B. Sentry",
+      "image": "rob sentry",
+      "artist": "Kunaigirl",
+      "description": "A robot with a two-armed shot. This R.O.B. uses the booster on its base to propel its jumps. Often used in the Subspace Army bomb factory in defense or labor roles, the R.O.B. Sentry also works as a detonator. Its emotional capacity is unknown, but it has utter trust in the Ancient Minister and obeys him unwaveringly. This production model has been made in great numbers.",
+      "profile": ["https://kunaigirl.newgrounds.com"]
+    },
+    {
+      "title": "R.O.B. Launcher",
+      "image": "rob launcher",
+      "artist": "izzzybopz",
+      "description": "An upgraded R.O.B. model with a missile-launcher head that bolsters firepower. The standard coloring has also been refinished with a green and brown military motif, stylishly accented with a blue cord connecting the arm sections and base. This R.O.B. does not use its arms--attacks are limited to the missiles fired from its head.",
+      "profile": ["https://izzzybopz.newgrounds.com"]
+    },
+    {
+      "title": "R.O.B. Blaster",
+      "image": "rob blaster",
+      "artist": "Jmanvelez",
+      "description": " A R.O.B. model boasting robo-beam-blasting eye lenses suited for long-range combat. There are two types--one acts like a stationary gun, sitting in place and lining up targets, and the other is mobile. Actually, the R.O.B. Sentry also features beam-firing capabilities, but because the roles of the R.O.B. Squad are so well defined, there's no conflict between the ranks.",
+      "profile": ["https://jmanvelez.newgrounds.com"]
+    },
+    {
+      "title": "Mizzo",
+      "image": "mizzo",
+      "artist": "ConfusedSnowMan",
+      "description": "Within the battleship Halberd, there's a display room where a number of enemies are on display. On the way there, a number of different enemies obstruct your path, but one enemy appears only in this display room. That enemy is Mizzo. With a round body sprouting arms and legs, its appearance and swimming motions make for an extremely bizarre being.",
+      "profile": ["https://confusedsnowman.newgrounds.com"]
+    },
+    {
+      "title": "Goomba",
+      "image": "goomba",
+      "artist": "53xy83457",
+      "description": "A citizen of the Mushroom Kingdom who sided with Bowser when he invaded. Goombas slowly chase after Mario on stubby legs. They're not the toughest creatures and can generally be defeated by jumping on them, which makes them disappear. They have fierce fangs, but they don't seem to serve any purpose. Though a nuisance to Mario, they're decent at baseball and mah-jongg.",
+      "profile": ["https://53xy83457.newgrounds.com"]
+    },
+    {
+      "title": "Koopa Troopa",
+      "image": "koopa troopa",
+      "artist": "ElRandomGMD",
+      "description": "A henchman of Bowser. In the old days, they'd retreat into their shells for a short while to protect themselves after being stepped on. Recently, however, some have begun to immediately pop back out. You'll often find them marching straight ahead--if the path ends, they'll just march into the abyss. Surely there are no braver turtles to be found.",
+      "profile": ["https://elrandomgmd.newgrounds.com/"]
+    },
+    {
+      "title": "Koopa Paratroopa",
+      "image": "koopa paratroopa",
+      "artist": "Botico",
+      "description": "A winged Koopa. These can fly to a degree, but in Super Mario Bros., it wasn't like they could soar wherever they pleased. In fact, they merely hovered, moving back and forth over set areas. Some Koopa Paratroopas don't even take to the skies, but just jump up and down. These become regular old Koopa Troopas when stomped.",
+      "profile": ["https://botico.newgrounds.com", "https://x.com/botico_"]
+    },
+    {
+      "title": "Hammer Bros.",
+      "image": "hammer bros",
+      "artist": "WonderWaffle93",
+      "description": "A character who throws a seemingly endless stream of hammers. Hammer Bros. have also been known to jump every so often. Since they throw their hammers in a high arc, if you manage to get in close, the hammers can't hit you. Unlike Koopas and Buzzy Beetles, Hammer Bros. don't reduce to their shells when jumped on. As the name suggests, most Hammer Bros. are found in pairs.",
+      "profile": ["https://wonderwaffle93.newgrounds.com", "https://x.com/WonderWaffle93"]
+    },
+    {
+      "title": "Bullet Bill",
+      "image": "bullet bill",
+      "artist": "DoodleWaffles",
+      "description": "A shell fired from a special cannon known as a Bill Blaster. Easily identified by their angry eyes, Bullet Bills fly across the land in perfectly straight lines. Though they easily shrug off fireballs, they can be stopped by jumping on them. A unique characteristic of the cannons is that they will not fire a Bullet Bill if Mario is standing right beside one.",
+      "profile": ["https://doodlewaffles.newgrounds.com"]
+    },
+    {
+      "title": "Giant Goomba",
+      "image": "giant goomba",
+      "artist": "JKAmovies",
+      "description": "A giant-sized Goomba, as the name suggests. In Super Mario 64, punching and kicking had no effect on this brute. It could be stopped like normal Goombas--by jumping on it from above. A colossal Goomba appears as the boss of world four in New Super Mario Bros., but that's a Mega Goomba, not a Giant Goomba.",
+      "profile": ["https://jkamovies.newgrounds.com"]
+    },
+    {
+      "title": "Galleom",
+      "image": "galleom",
+      "artist": "MOHD5aqer",
+      "description": "An enormous, transforming robot and Subspace Army warmonger. Galleom is characterized by various attack threats, including jump stomps, beefy arm bludgeonings, and even missiles fired from its back. It also has a Subspace Bomb set in its head, which it can use in times of desperation to blow itself up and drag the player into the darkness of Subspace. It's one tough robot!",
+      "profile": ["https://mohd5aqer.newgrounds.com", "https://twitter.com/MOHD5aqer"]
+    },
+    {
+      "title": "Duon",
+      "image": "duon",
+      "artist": "Charlie57913",
+      "description": "A robot with two upper bodies sharing one set of wheels. The blue-bodied half uses sword attacks, while the pink one uses lasers from its head and arms for offensive power. Whichever side is facing you will attack. Duon also threatens with homing missiles and the blade on top of the blue half.",
+      "profile": ["https://charlie57913.newgrounds.com"]
+    },
+    {
+      "title": "Tabuu",
+      "image": "tabuu",
+      "artist": "DALAP",
+      "description": "The ruler of Subspace and master of operations. Tabuu controls Master Hand with chains of light to excise this world and build up his great maze. He used Shadow Bugs to form Subspace and manipulates the servants of Master Hand to his heart's content. Born in a vastly foreign realm, he also possesses great leadership powers. Tabuu... No name is more suitable.",
+      "profile": ["https://dalap.newgrounds.com", "https://twitter.com/DALAP_Art"]
+    },
+    {
+      "title": "Master Hand",
+      "image": "master hand",
+      "artist": "BURNT-BURRITO",
+      "description": "A being tied to the link between this world, where trophies fight, and the world beyond. The meaning of his existence is unknown, as are his goals, but he seems to have obtained (and kept hidden) a power that borders on absolute. He also seems to feel a certain joy in challenging chosen warriors who've claimed many victories. He waits even now in Final Destination.",
+      "profile": ["https://burnt-burrito.newgrounds.com"]
+    },
+    {
+      "title": "Crazy Hand",
+      "image": "crazy hand",
+      "artist": "Youtakk",
+      "description": "A seeming manifestation of the destructive spirit in direct contrast to Master Hand, who is the manifestation of the creative spirit. Crazy Hand appears out of nowhere when Master Hand's power begins to ebb. His repeated attacks evoke the bizarre. Those who must face Master Hand and Crazy Hand at the same time face a long and painful battle to the death.",
+      "profile": ["https://youtakk.newgrounds.com"]
+    },
+    {
+      "title": "Petey Piranha",
+      "image": "petey piranha",
+      "artist": "the-red-ant",
+      "description": "A colossal Piranha Plant. Unlike its pipe-inhabiting cousins, it uses its legs to walk around. It can fly, too. As you might expect, it often appears as a boss character in Mario adventures. This may come as a surprise, but it also displays surprising dexterity in kart races and ball games.",
+      "profile": ["https://the-red-ant.newgrounds.com"]
+    },
+    {
+      "title": "Rayquaza",
+      "image": "rayquaza",
+      "artist": "cogdop",
+      "description": "A Sky High Pokémon. It normally resides high up in the ozone layer where it flies endlessly, so it is rarely seen. However, when Groudon and Kyogre began to fight, it appeared to calm them down. It has the ability Air Lock, which blocks all weather-condition effects. It has exceedingly strong abilities, and its attack power is especially remarkable.",
+      "profile": ["https://cogdop.newgrounds.com"]
+    },
+    {
+      "title": "Porky",
+      "image": "porky",
+      "artist": "Msthemacosh",
+      "description": "A self-centered, rotten brat who lives next door to Ness. As the events of the game progress, he's rapidly led astray and becomes Giygas's right-hand man. Afterward, he goes missing in time and then reappears in the Nowhere Islands of Mother 3. He leads the Pig Mask Army invasion but is eventually defeated by Lucas and friends.",
+      "profile": ["https://msthemacosh.newgrounds.com"]
+    },
+    {
+      "title": "Porky Statue",
+      "image": "porky statue",
+      "artist": "JarvidTakero",
+      "description": "A guardian statue standing inside New Pork City that's clearly based on Porky himself. Investigate it, and the statue will turn hostile and start a battle. And it has 100,000,000 HP! It has very high stats, so you'll never win if you attack it straight-on. Thankfully, there's an item called \"New Year's Eve\" that can reduce its HP to 1--then you can defeat it with ease.",
+      "profile": ["https://jarvidtakero.newgrounds.com"]
+    },
+    {
+      "title": "Ridley",
+      "image": "ridley",
+      "artist": "PerKGrok",
+      "description": "The leader of the Space Pirates. He looks like a pterosaur but has high intelligence and a brutal nature. He plans to steal the baby Metroid from Samus for his own use. Ridley utilizes wings for a full range of flight and attacks with fireballs from his mouth and whips of his tail. As the culprit behind the murder of Samus's parents, the connections with Samus run deep.",
+      "profile": ["https://perkgrok.newgrounds.com"]
+    },
+    {
+      "title": "Meta Ridley",
+      "image": "meta ridley",
+      "artist": "Dragalo",
+      "description": "The meta form of Ridley, revived using the Space Pirates' genetic engineering and cybernetic technologies. His thin chest plate--and weak point--is protected by a highly resistant membrane. Meta Ridley is highly mobile and features a multimissile system, a bomb launcher, and powerful wings. Ice attacks are particularly effective in dealing damage to him.",
+      "profile": ["https://dragalo.newgrounds.com"]
+    },
+    {
+      "title": "Ancient Minister",
+      "image": "ancient minister",
+      "artist": "BigA7071",
+      "description": "The commander of the Subspace Army who uses Subspace Bombs to tear up this world. He was once the lord of this world, living on the floating Island of the Ancients with many robots--but the robots were taken hostage on Tabuu's orders. Now that their home's a bomb factory, the robots carry out their functions while enduring deep sadness caused by the loss of their colleagues.",
+      "profile": ["https://biga7071.newgrounds.com"]
+    }
+]

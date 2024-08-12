@@ -279,22 +279,25 @@ class SelectState extends State {
 		
 		else if (actions.justPressed.DESELECT) {
 			
+			final ft = new FloatTweener(0.75, 1, 0, f -> {
+				bg.alpha = selection.sprite.alpha = highlight.sprite.alpha = f;
+			});
 			
-			// fade
+			ft.onComplete = () -> {
+				bg.remove();
+				Command.queueMany(
+					STOP_BY_TYPE(MUSIC),
+					EXIT(SELECT_STATE),
+					ENTER(LOGO_STATE)
+				);
+			};
 			
-			
-			
-			
-			
-			bg.remove();
 			Command.queueMany(
-				STOP_BY_TYPE(MUSIC),
 				PLAY(Res.load("sfx/BACK.ogg").toSound(), {
 					type : SFX,
 					volume : 1
 				}),
-				EXIT(SELECT_STATE),
-				ENTER(LOGO_STATE)
+				ADD_UPDATER(entity, ft)
 			);
 		}
 	}
