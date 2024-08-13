@@ -1,5 +1,9 @@
 package states;
 
+import mono.timing.Tweener;
+import hxsl.Shader;
+import mono.timing.Updater;
+import hxd.res.BitmapFont;
 import haxe.DynamicAccess;
 import haxe.Json;
 import IDs.StateID;
@@ -29,10 +33,13 @@ class CreatureState extends State {
 	var creature:Proto;
 	var creatures:Array<String>;
 	var creatureIndex:Int;
+	var delay:Updater;
+	var rotate:Tweener;
 	
 	var trophy:Proto;
 	var nameText:Text;
 	var text:Text;
+	var linkText:Text;
 	var infoMap:StringMap<CreatureInfo>;
 	
 	var entity:Entity;
@@ -45,14 +52,31 @@ class CreatureState extends State {
 		bgR = new Bitmap(Res.load("bgs/BACKGROUND-B-2.png").toTile());
 		bgR.y = 388;
 		
-		nameText = new Text(hxd.res.DefaultFont.get());
+		var fnt = Res.load("fonts/aotf.fnt").to(BitmapFont).toFont();
+		
+		nameText = new Text(fnt);
 		nameText.text = "Test text";
 		nameText.x = 600; nameText.y = 50;
 		
-		text = new Text(hxd.res.DefaultFont.get());
+		var txtFnt = Res.load("fonts/aotf_small.fnt").to(BitmapFont).toFont();
+		
+		text = new Text(txtFnt);
 		text.text = "Test text";
-		text.x = 600; text.y = 150;
+		text.x = 600; text.y = 100;
 		text.maxWidth = 200;
+		
+		linkText = new Text(txtFnt);
+		linkText.text = "";
+		linkText.x = 600; linkText.y = 400;
+		
+		delay = Timing.delay(3, startRotation, false);
+		delay.repetitions = 0;
+		
+		rotate = Timing.tween(52 / 20, f -> {
+			creature.sprite.scaleX = f;
+			creature.sprite.x = 265 * (1 - f);
+		}, null, f -> Math.cos(2 * Math.PI * f), false);
+		rotate.repetitions = 0;
 		
 		Command.queue(REGISTER_TRIGGER("setCreature", onSetCreature));
 		
@@ -101,10 +125,13 @@ class CreatureState extends State {
 			ADD_TO(bgR, ParentID.S2D, LayerID.BG),
 			ADD_TO(nameText, ParentID.S2D, LayerID.FG),
 			ADD_TO(text, ParentID.S2D, LayerID.FG),
+			ADD_TO(linkText, ParentID.S2D, LayerID.FG),
 			ADD_UPDATER(entity, Timing.float(0.1, 0, 854, f -> {
 				bgL.x = f - 854;
 				bgR.x = 854 - f;
-			}))
+			})),
+			ADD_UPDATER(entity, delay),
+			ADD_UPDATER(entity, rotate)
 		);
 	}
 	
@@ -115,6 +142,7 @@ class CreatureState extends State {
 		bgR.remove();
 		nameText.remove();
 		text.remove();
+		linkText.remove();
 		
 		trophy.remove(ecs);
 		creature.remove(ecs);
@@ -135,10 +163,22 @@ class CreatureState extends State {
 		
 		nameText.text = cr.title;
 		text.text = cr.description;
+		linkText.text = cr.profiles.join("\n");
 		
 		creature.anim.play(name);
+		trophy.anim.play("default");
+		trophy.anim.pause();
 		
 		creatureIndex = creatures.indexOf(name);
+		
+		delay.resetCounter();
+		delay.repetitions = 1;
+	}
+	
+	function startRotation() {
+		trophy.anim.resume();
+		rotate.repetitions = -1;
+		rotate.resetCounter();
 	}
 	
 	function handleInput(si:StringMap<Input>) {
