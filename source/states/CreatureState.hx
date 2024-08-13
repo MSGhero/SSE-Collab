@@ -77,6 +77,10 @@ class CreatureState extends State {
 			creature.sprite.x = 265 * (1 - f);
 		}, null, f -> Math.cos(2 * Math.PI * f), false);
 		rotate.repetitions = 0;
+		rotate.onCancel = () -> {
+			creature.sprite.scaleX = 1;
+			creature.sprite.x = 0;
+		};
 		
 		Command.queue(REGISTER_TRIGGER("setCreature", onSetCreature));
 		
@@ -171,6 +175,7 @@ class CreatureState extends State {
 		
 		creatureIndex = creatures.indexOf(name);
 		
+		rotate.cancel();
 		delay.resetCounter();
 		delay.repetitions = 1;
 	}
@@ -211,7 +216,8 @@ class CreatureState extends State {
 					volume : 1
 				}),
 				EXIT(CREATURE_STATE),
-				ENTER(SELECT_STATE)
+				ENTER(SELECT_STATE),
+				TRIGGER("fullAlpha", "")
 			);
 		}
 	}

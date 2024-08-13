@@ -179,7 +179,10 @@ class SelectState extends State {
 		ecs.setComponents(ecs.createEntity(), int);
 		buttons.push(int);
 		
-		Command.queue(REGISTER_TRIGGER("selFadeIn", onFadeIn));
+		Command.queueMany(
+			REGISTER_TRIGGER("selFadeIn", onFadeIn),
+			REGISTER_TRIGGER("fullAlpha", s -> bg.alpha = selection.sprite.alpha = highlight.sprite.alpha = 1)
+		);
 	}
 	
 	public function destroy() {
