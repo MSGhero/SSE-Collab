@@ -1,5 +1,8 @@
 package states;
 
+import hxd.System;
+import mono.geom.Rect;
+import mono.interactive.Interactive;
 import mono.timing.Tweener;
 import hxsl.Shader;
 import mono.timing.Updater;
@@ -42,6 +45,8 @@ class CreatureState extends State {
 	var linkText:Text;
 	var infoMap:StringMap<CreatureInfo>;
 	
+	var linkInts:Array<Interactive>;
+	
 	var entity:Entity;
 	
 	public function init() {
@@ -56,18 +61,18 @@ class CreatureState extends State {
 		
 		nameText = new Text(fnt);
 		nameText.text = "Test text";
-		nameText.x = 600; nameText.y = 50;
+		nameText.x = 500; nameText.y = 50;
 		
-		var txtFnt = Res.load("fonts/aotf_small.fnt").to(BitmapFont).toFont();
+		var txtFnt = Res.load("fonts/aotf_heavy.fnt").to(BitmapFont).toFont();
 		
 		text = new Text(txtFnt);
 		text.text = "Test text";
-		text.x = 600; text.y = 100;
-		text.maxWidth = 200;
+		text.x = 500; text.y = 100;
+		text.maxWidth = 300;
 		
 		linkText = new Text(txtFnt);
 		linkText.text = "";
-		linkText.x = 600; linkText.y = 400;
+		linkText.x = 500; linkText.y = 400;
 		
 		delay = Timing.delay(3, startRotation, false);
 		delay.repetitions = 0;
@@ -81,6 +86,25 @@ class CreatureState extends State {
 			creature.sprite.scaleX = 1;
 			creature.sprite.x = 0;
 		};
+		
+		linkInts = [
+			{
+				shape : Rect.fromTL(500, 400, 250, 40),
+				enabled : true,
+				onSelect : () -> {
+					final links = linkText.text.split("\n");
+					if (links.length > 0) System.openURL(links[0]);
+				}
+			},
+			{
+				shape : Rect.fromTL(500, 440, 250, 40),
+				enabled : true,
+				onSelect : () -> {
+					final links = linkText.text.split("\n");
+					System.openURL(links.length > 1 ? links[1] : links[0]);
+				}
+			}
+		];
 		
 		Command.queue(REGISTER_TRIGGER("setCreature", onSetCreature));
 		

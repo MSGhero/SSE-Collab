@@ -282,7 +282,7 @@ class SelectState extends State {
 		
 		else if (actions.justPressed.DESELECT) {
 			
-			final ft = new FloatTweener(0.75, 1, 0, f -> {
+			final ft = new FloatTweener(0.25, 1, 0, f -> {
 				bg.alpha = selection.sprite.alpha = highlight.sprite.alpha = f;
 			});
 			
@@ -307,7 +307,7 @@ class SelectState extends State {
 	
 	function onFadeIn(_) {
 		
-		final ft = new FloatTweener(0.75, 0, 1, f -> {
+		final ft = new FloatTweener(0.25, 0, 1, f -> {
 			bg.alpha = selection.sprite.alpha = highlight.sprite.alpha = f;
 		});
 		
@@ -362,6 +362,9 @@ class SelectState extends State {
 	}
 	
 	function positionHighlight() {
+		
+		final name = byType ? namesByType[(Std.parseInt(selection.anim.name) - 5) * maxRows * maxCols + row * maxCols + col] : namesBySubspace[Std.parseInt(selection.anim.name) * maxRows * maxCols + row * maxCols + col];
+		if (name == null) return;
 		
 		highlight.sprite.x = 2 + selectionX + col * 168; highlight.sprite.y = 78 + selectionY + row * 67;
 		var frame = "";

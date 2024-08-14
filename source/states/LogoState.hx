@@ -105,7 +105,7 @@ class LogoState extends State {
 			
 			bg.alpha = fg.alpha = 0;
 			
-			final ft = new FloatTweener(0.75, 0, 1, f -> {
+			final ft = new FloatTweener(0.25, 0, 1, f -> {
 				bg.alpha = fg.alpha = bm.alpha = f;
 			});
 			
@@ -138,7 +138,7 @@ class LogoState extends State {
 				if (actions.justPressed.SELECT || actions.justPressed.MOUSE) {
 					awaitingInput = false;
 					
-					final ft = new FloatTweener(0.75, 1, 0, f -> {
+					final ft = new FloatTweener(0.25, 1, 0, f -> {
 						bg.alpha = fg.alpha = bm.alpha = f;
 					});
 					
