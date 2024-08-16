@@ -35,8 +35,8 @@ class SelectState extends State {
 	final maxRows:Int = 4;
 	final maxCols:Int = 3;
 	
-	final selectionX:Int = 158;
-	final selectionY:Int = 42;
+	final selectionX:Int = 360;
+	final selectionY:Int = 94;
 	
 	var entity:Entity;
 	
@@ -112,7 +112,7 @@ class SelectState extends State {
 		
 		for (i in 0...12) {
 			var int:Interactive = {
-				shape : Rect.fromTL(2 + selectionX + (i % maxCols) * 168, 78 + selectionY + Std.int(i / maxCols) * 67, 168, 67),
+				shape : Rect.fromTL(39 + selectionX + (i % maxCols) * 378, 206 + selectionY + Std.int(i / maxCols) * 151, 366, 141),
 				enabled : false,
 				onOver : () -> {
 					row = Std.int(i / maxCols);
@@ -126,7 +126,7 @@ class SelectState extends State {
 		}
 		
 		var int:Interactive = {
-			shape : Rect.fromTL(selectionX, selectionY, 200, 32),
+			shape : Rect.fromTL(selectionX, selectionY, 450, 72),
 			enabled : false,
 			onSelect : () -> {
 				if (byType) {
@@ -141,7 +141,7 @@ class SelectState extends State {
 		buttons.push(int);
 		
 		int = {
-			shape : Rect.fromTL(selectionX + 200, selectionY, 200, 32),
+			shape : Rect.fromTL(selectionX + 450, selectionY, 450, 72),
 			enabled : false,
 			onSelect : () -> {
 				if (!byType) {
@@ -156,7 +156,7 @@ class SelectState extends State {
 		buttons.push(int);
 		
 		int = {
-			shape : Rect.fromTL(selectionX + 88, selectionY + 368, 18, 18),
+			shape : Rect.fromTL(selectionX + 198, selectionY + 828, 40, 40),
 			enabled : false,
 			onSelect : () -> {
 				setColumn(col - maxCols);
@@ -168,7 +168,7 @@ class SelectState extends State {
 		buttons.push(int);
 		
 		int = {
-			shape : Rect.fromTL(selectionX + 432, selectionY + 368, 18, 18),
+			shape : Rect.fromTL(selectionX + 972, selectionY + 828, 40, 40),
 			enabled : false,
 			onSelect : () -> {
 				setColumn(col + maxCols);
@@ -366,7 +366,7 @@ class SelectState extends State {
 		final name = byType ? namesByType[(Std.parseInt(selection.anim.name) - 5) * maxRows * maxCols + row * maxCols + col] : namesBySubspace[Std.parseInt(selection.anim.name) * maxRows * maxCols + row * maxCols + col];
 		if (name == null) return;
 		
-		highlight.sprite.x = 2 + selectionX + col * 168; highlight.sprite.y = 78 + selectionY + row * 67;
+		highlight.sprite.x = 4 + selectionX + col * 378; highlight.sprite.y = 176 + selectionY + row * 151;
 		var frame = "";
 		
 		if (col <= 0) {

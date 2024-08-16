@@ -75,7 +75,7 @@ class Mono extends AMono {
 		
 		ecs.getPhase("update").enable();
 		
-		stage.s2d.scaleMode = LetterBox(854, 480);
+		stage.s2d.scaleMode = LetterBox(1920, 1080);
 		
 		ecs.setResources(stage.s2d);
 		
