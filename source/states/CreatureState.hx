@@ -63,6 +63,7 @@ class CreatureState extends State {
 		nameText.x = 1125; nameText.y = 112;
 		
 		var txtFnt = Res.load("fonts/aotf_heavy.fnt").to(BitmapFont).toFont();
+		txtFnt.resizeTo(36);
 		
 		text = new Text(txtFnt);
 		text.text = "Test text";

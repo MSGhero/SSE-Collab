@@ -60,7 +60,6 @@ class LogoState extends State {
 		videoEnded = false;
 		video.loadFile("Logo_Animation.webm", () -> {
 			
-			video.setScale(1 / 2.25);
 			video.onEnd = onVideoEnd; // not so sync with ecs
 			
 			Command.queueMany(
