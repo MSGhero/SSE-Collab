@@ -1,5 +1,6 @@
 package states;
 
+import io.newgrounds.NG;
 import hxd.System;
 import mono.geom.Rect;
 import mono.interactive.Interactive;
@@ -32,6 +33,7 @@ class CreatureState extends State {
 	
 	var bgL:Bitmap;
 	var bgR:Bitmap;
+	var arrows:Bitmap;
 	var creature:Proto;
 	var creatures:Array<String>;
 	var creatureIndex:Int;
@@ -45,6 +47,13 @@ class CreatureState extends State {
 	var infoMap:StringMap<CreatureInfo>;
 	
 	var linkInts:Array<Interactive>;
+	var larrowInt:Interactive;
+	var rarrowInt:Interactive;
+	
+	var l0Ent:Entity;
+	var l1Ent:Entity;
+	var larrowEnt:Entity;
+	var rarrowEnt:Entity;
 	
 	var entity:Entity;
 	
@@ -55,24 +64,26 @@ class CreatureState extends State {
 		bgL = new Bitmap(Res.load("bgs/BACKGROUND-B-1.png").toTile());
 		bgR = new Bitmap(Res.load("bgs/BACKGROUND-B-2.png").toTile());
 		bgR.y = 873;
+		arrows = new Bitmap(Res.load("ui/selection/Green Arrows.png").toTile());
 		
 		var fnt = Res.load("fonts/aotf.fnt").to(BitmapFont).toFont();
 		
 		nameText = new Text(fnt);
 		nameText.text = "Test text";
-		nameText.x = 1125; nameText.y = 112;
+		nameText.x = 1000; nameText.y = 82;
+		nameText.maxWidth = 600;
+		nameText.textAlign = Center;
 		
-		var txtFnt = Res.load("fonts/aotf_heavy.fnt").to(BitmapFont).toFont();
-		txtFnt.resizeTo(36);
+		var txtFnt = Res.load("fonts/aotf_heavy_48.fnt").to(BitmapFont).toFont();
 		
 		text = new Text(txtFnt);
 		text.text = "Test text";
-		text.x = 1125; text.y = 225;
-		text.maxWidth = 675;
+		text.x = 1000; text.y = 225;
+		text.maxWidth = 600;
 		
 		linkText = new Text(txtFnt);
 		linkText.text = "";
-		linkText.x = 1125; linkText.y = 900;
+		linkText.x = 1000; linkText.y = 900;
 		
 		delay = Timing.delay(3, startRotation, false);
 		delay.repetitions = 0;
@@ -106,6 +117,18 @@ class CreatureState extends State {
 			}
 		];
 		
+		larrowInt = {
+			shape : Rect.fromTL(986, 90, 59, 63),
+			enabled : true,
+			onSelect : onLeft
+		};
+		
+		rarrowInt = {
+			shape : Rect.fromTL(1526, 90, 59, 63),
+			enabled : true,
+			onSelect : onRight
+		};
+		
 		Command.queue(REGISTER_TRIGGER("setCreature", onSetCreature));
 		
 		infoMap = new StringMap();
@@ -115,7 +138,8 @@ class CreatureState extends State {
 				title : d.get("title"),
 				artist : d.get("artist"),
 				description : d.get("description"),
-				profiles : d.get("profile")
+				profiles : d.get("profile"),
+				viewed : false
 			});
 		}
 	}
@@ -135,13 +159,24 @@ class CreatureState extends State {
 		
 		entity = ecs.createEntity();
 		
+		l0Ent = ecs.createEntity();
+		l1Ent = ecs.createEntity();
+		larrowEnt = ecs.createEntity();
+		rarrowEnt = ecs.createEntity();
+		
+		ecs.setComponents(l0Ent, linkInts[0]);
+		ecs.setComponents(l1Ent, linkInts[1]);
+		ecs.setComponents(larrowEnt, larrowInt);
+		ecs.setComponents(rarrowEnt, rarrowInt);
+		
 		creatureIndex = 0;
 		
 		trophy = new Proto(ecs.createEntity());
 		trophy.createSprite(S2D, FG);
 		trophy.createAnim("trophy");
 		trophy.add(ecs);
-		trophy.sprite.x = -100; trophy.sprite.y = -50;
+		trophy.sprite.x = -120; trophy.sprite.y = 0;
+		trophy.sprite.setScale(2);
 		
 		creature = new Proto(ecs.createEntity());
 		creature.createSprite(S2D, FG);
@@ -151,6 +186,7 @@ class CreatureState extends State {
 		Command.queueMany(
 			ADD_TO(bgL, ParentID.S2D, LayerID.BG),
 			ADD_TO(bgR, ParentID.S2D, LayerID.BG),
+			ADD_TO(arrows, ParentID.S2D, LayerID.BG),
 			ADD_TO(nameText, ParentID.S2D, LayerID.FG),
 			ADD_TO(text, ParentID.S2D, LayerID.FG),
 			ADD_TO(linkText, ParentID.S2D, LayerID.FG),
@@ -168,6 +204,7 @@ class CreatureState extends State {
 		
 		bgL.remove();
 		bgR.remove();
+		arrows.remove();
 		nameText.remove();
 		text.remove();
 		linkText.remove();
@@ -176,6 +213,10 @@ class CreatureState extends State {
 		creature.remove(ecs);
 		
 		ecs.deleteEntity(entity);
+		ecs.deleteEntity(l0Ent);
+		ecs.deleteEntity(l1Ent);
+		ecs.deleteEntity(larrowEnt);
+		ecs.deleteEntity(rarrowEnt);
 	}
 	
 	override public function update() {
@@ -199,6 +240,26 @@ class CreatureState extends State {
 		
 		creatureIndex = creatures.indexOf(name);
 		
+		cr.viewed = true;
+		
+		if (NG.core?.loggedIn) {
+			
+			final medal = NG.core.medals.getById(79390);
+			
+			if (!medal.unlocked) {
+				
+				var b = true;
+				for (v in infoMap) {
+					if (!v.viewed) {
+						b = false;
+						break;
+					}
+				}
+				
+				if (b) medal.sendUnlock();
+			}
+		}
+		
 		rotate.cancel();
 		delay.resetCounter();
 		delay.repetitions = 1;
@@ -215,22 +276,11 @@ class CreatureState extends State {
 		final actions = si.get(InputID.MENU);
 		
 		if (actions.justPressed.L) {
-			creatureIndex--;
-			while (creatureIndex < 0) creatureIndex += creatures.length;
-			onSetCreature(creatures[creatureIndex]);
-			Command.queue(PLAY(Res.load("sfx/NEXT.ogg").toSound(), {
-				type : SFX,
-				volume : 1
-			}));
+			onLeft();
 		}
 		
 		else if (actions.justPressed.R) {
-			creatureIndex = (creatureIndex + 1) % creatures.length;
-			onSetCreature(creatures[creatureIndex]);
-			Command.queue(PLAY(Res.load("sfx/NEXT.ogg").toSound(), {
-				type : SFX,
-				volume : 1
-			}));
+			onRight();
 		}
 		
 		if (actions.justPressed.DESELECT) {
@@ -245,6 +295,27 @@ class CreatureState extends State {
 			);
 		}
 	}
+	
+	function onLeft() {
+		
+		creatureIndex--;
+		while (creatureIndex < 0) creatureIndex += creatures.length;
+		onSetCreature(creatures[creatureIndex]);
+		Command.queue(PLAY(Res.load("sfx/NEXT.ogg").toSound(), {
+			type : SFX,
+			volume : 1
+		}));
+	}
+	
+	function onRight() {
+		
+		creatureIndex = (creatureIndex + 1) % creatures.length;
+		onSetCreature(creatures[creatureIndex]);
+		Command.queue(PLAY(Res.load("sfx/NEXT.ogg").toSound(), {
+			type : SFX,
+			volume : 1
+		}));
+	}
 }
 
 @:structInit
@@ -253,4 +324,5 @@ private class CreatureInfo {
 	public final artist:String;
 	public final description:String;
 	public final profiles:Array<String>;
+	public var viewed:Bool;
 }

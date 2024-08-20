@@ -1,5 +1,10 @@
 package states;
 
+import io.newgrounds.NGLite.LoginOutcome;
+import io.newgrounds.NG;
+import mono.animation.AnimCommand;
+import IDs.SheetID;
+import mono.animation.Spritesheet;
 import mono.timing.Updater;
 import hxd.res.BitmapFont;
 import mono.geom.Rect;
@@ -76,39 +81,37 @@ class PreloadState extends State {
 				TimingCommand.ADD_UPDATER(entity, textUp)
 			);
 			
-			Pak.load(["assets.pak"], null, () -> {
+			Pak.load(["ngapi.pak"], null, () -> {
 				
-				trace("assets loaded");
+				final ng = Res.load("ngapi.txt").toText().split("\r\n");
+				final appid = StringTools.trim(ng[0]);
+				final key = StringTools.trim(ng[1]);
 				
-				active = false;
+				NG.createAndCheckSession(appid, onLogin);
+				ecs.setResources(NG.core);
+				NG.core.setupEncryption(key);
 				
-				text.remove();
-				text.text = "";
+				if (!NG.core.loggedIn && !NG.core.attemptingLogin) {
+					NG.core.requestLogin(onLogin);
+				}
 				
-				textUp.paused = true;
-				textUp.dispose();
-				
-				bm.x = bm.y = 0;
-				bm.rotation = 0;
-				bm.tile = Res.load("Click_Icon.png").toTile();
-				
-				final int:Interactive = {
-					enabled : true,
-					shape : Rect.fromTL(270, 146, 1920 - 540, 1080 - 292),
-					onOver : () -> {
-						bm.tile = Res.load("Click_Icon_2.png").toTile();
-					},
-					onOut : () -> {
-						bm.tile = Res.load("Click_Icon.png").toTile();
-					},
-					onSelect : () -> {
-						Command.queueMany(
-							EXIT(PRELOAD_STATE)
-						);
-					}
-				};
-				
-				ecs.setComponents(entity, int);
+				Pak.load(["assets.pak"], null, () -> {
+					
+					trace("assets loaded");
+					
+					final t = haxe.Timer.stamp();
+					var sprites = new Spritesheet();
+					sprites.loadTexturePackerData(Res.load("sprites/sprites.png").toImage(), Res.load("sprites/sprites.txt").toText());
+					sprites.loadTexturePackerData(Res.load("sprites/creatures-0.png").toImage(), Res.load("sprites/creatures-0.txt").toText());
+					sprites.loadTexturePackerData(Res.load("sprites/creatures-1.png").toImage(), Res.load("sprites/creatures-1.txt").toText());
+					for (i in 1...6) sprites.loadSingle(Res.load('ui/preview/Subspace Page $i.png').toImage(), 'Subspace Page $i');
+					for (i in 1...8) sprites.loadSingle(Res.load('ui/preview/Type Page $i.png').toImage(), 'Type Page $i');
+					trace('asset crunching: ${haxe.Timer.stamp() - t} sec');
+					
+					Command.queue(ADD_SHEET(sprites, SheetID.SPRITES));
+					
+					onAssetsCrunch();
+				});
 			});
 		});
 	}
@@ -121,7 +124,59 @@ class PreloadState extends State {
 		ecs.deleteEntity(entity);
 	}
 	
+	function onLogin(lo:LoginOutcome) {
+		
+		switch (lo) {
+			case SUCCESS:
+				trace("logged in");
+				NG.core.requestMedals(o -> {
+					switch (o) {
+						case SUCCESS:
+							final medal = NG.core.medals.getById(79389);
+							if (!medal.unlocked) medal.sendUnlock();
+						case FAIL(error):
+							trace(error);
+					}
+				});
+			case FAIL(error):
+				trace(error);
+		}
+	}
+	
+	function onAssetsCrunch() {
+		
+		active = false;
+		
+		text.remove();
+		text.text = "";
+		
+		textUp.paused = true;
+		textUp.dispose();
+		
+		bm.x = bm.y = 0;
+		bm.rotation = 0;
+		bm.tile = Res.load("Click_Icon.png").toTile();
+		
+		final int:Interactive = {
+			enabled : true,
+			shape : Rect.fromTL(270, 146, 1920 - 540, 1080 - 292),
+			onOver : () -> {
+				bm.tile = Res.load("Click_Icon_2.png").toTile();
+			},
+			onOut : () -> {
+				bm.tile = Res.load("Click_Icon.png").toTile();
+			},
+			onSelect : () -> {
+				Command.queueMany(
+					EXIT(PRELOAD_STATE)
+				);
+			}
+		};
+		
+		ecs.setComponents(entity, int);
+	}
+	
 	override public function update() {
-		bm.rotation += 15 / 360 * 3.14;
+		if (bm != null) bm.rotation += 15 / 360 * 3.14;
 	}
 }

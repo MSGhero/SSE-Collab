@@ -10,13 +10,7 @@
 *.wav
 *.webm
 assets/misc/
-assets/fonts/
+assets/preloader/fonts/
 ngapi.txt
 assets/.tmp/
-assets/preloader/.tmp/cache.dat
-assets/preloader/.tmp/fonts/aotf_heavy.bfnt
-assets/preloader/.tmp/fonts/aotf_small.bfnt
-assets/preloader/.tmp/fonts/aotf.bfnt
-assets/preloader/fonts/aotf_heavy.fnt
-assets/preloader/fonts/aotf_small.fnt
-assets/preloader/fonts/aotf.fnt
+assets/preloader/.tmp/

@@ -5,7 +5,6 @@ import states.GameState;
 import states.LogoState;
 import states.CreatureState;
 import utils.Pak;
-import hxd.Res;
 import mono.app.AMono;
 import mono.app.Stage;
 import states.PreloadState;
@@ -15,8 +14,6 @@ import mono.input.PadInput;
 import mono.input.MouseInput;
 import input.DefaultMappings;
 import mono.input.Input;
-import mono.animation.Spritesheet;
-import io.newgrounds.NG;
 import ecs.Universe;
 import ecs.Phase;
 import mono.input.InputSystem;
@@ -40,8 +37,6 @@ import mono.input.MouseSystem;
 class Mono extends AMono {
 	
 	var loadedIn:Bool;
-	
-	var ngMedals:Bool; // how should this fit into ecs? NG.core as a resource makes sense, but login occurs before ecs init
 	
 	public function new(stage:Stage) {
 		Pak.init();
@@ -103,21 +98,12 @@ class Mono extends AMono {
 	
 	function postPreload() {
 		
-		var sprites = new Spritesheet();
-		sprites.loadTexturePackerData(Res.load("sprites/sprites.png").toImage(), Res.load("sprites/sprites.txt").toText());
-		sprites.loadTexturePackerData(Res.load("sprites/creatures.png").toImage(), Res.load("sprites/creatures.txt").toText());
-		for (i in 1...6) sprites.loadSingle(Res.load('ui/preview/Subspace Page $i.png').toImage(), 'Subspace Page $i');
-		for (i in 1...8) sprites.loadSingle(Res.load('ui/preview/Type Page $i.png').toImage(), 'Type Page $i');
-		
-		if (ngMedals) ecsRef.setResources(NG.core);
-		
 		var game = new GameState(ecsRef);
 		var logo = new LogoState(ecsRef);
 		var creature = new CreatureState(ecsRef);
 		var select = new SelectState(ecsRef);
 		
 		Command.queueMany(
-			ADD_SHEET(sprites, SheetID.SPRITES),
 			PARSE_ANIMS(["specs/ui.txt", "specs/creatures.txt"], SPRITES),
 			REGISTER_STATE(game, GAME_STATE),
 			REGISTER_STATE(creature, CREATURE_STATE),
