@@ -83,7 +83,7 @@ class CreatureState extends State {
 		
 		linkText = new Text(txtFnt);
 		linkText.text = "";
-		linkText.x = 1000; linkText.y = 900;
+		linkText.x = 1000; linkText.y = 890;
 		
 		delay = Timing.delay(3, startRotation, false);
 		delay.repetitions = 0;
@@ -100,19 +100,29 @@ class CreatureState extends State {
 		
 		linkInts = [
 			{
-				shape : Rect.fromTL(1125, 900, 562, 90),
+				shape : Rect.fromTL(1000, 890, 250, 48),
 				enabled : true,
 				onSelect : () -> {
-					final links = linkText.text.split("\n");
-					if (links.length > 0) System.openURL(links[0]);
+					final cr = infoMap.get(creatures[creatureIndex]);
+					final links = cr.profiles;
+					if (links.length > 0) {
+						System.openURL(links[0]);
+						cr.linkViewed = true;
+						checkLinksViewed();
+					}
 				}
 			},
 			{
-				shape : Rect.fromTL(1125, 990, 562, 90),
+				shape : Rect.fromTL(1000, 890 + 48, 250, 48),
 				enabled : true,
 				onSelect : () -> {
-					final links = linkText.text.split("\n");
-					System.openURL(links.length > 1 ? links[1] : links[0]);
+					final cr = infoMap.get(creatures[creatureIndex]);
+					final links = cr.profiles;
+					if (links.length > 1) {
+						System.openURL(links[1]);
+						cr.linkViewed = true;
+						checkLinksViewed();
+					}
 				}
 			}
 		];
@@ -139,7 +149,8 @@ class CreatureState extends State {
 				artist : d.get("artist"),
 				description : d.get("description"),
 				profiles : d.get("profile"),
-				viewed : false
+				viewed : false,
+				linkViewed : false
 			});
 		}
 	}
@@ -232,7 +243,9 @@ class CreatureState extends State {
 		
 		nameText.text = cr.title;
 		text.text = cr.description;
-		linkText.text = cr.profiles.join("\n");
+		linkText.text = cr.artist;
+		
+		linkInts[1].enabled = cr.profiles.length > 1;
 		
 		creature.anim.play(name);
 		trophy.anim.play("default");
@@ -241,24 +254,7 @@ class CreatureState extends State {
 		creatureIndex = creatures.indexOf(name);
 		
 		cr.viewed = true;
-		
-		if (NG.core?.loggedIn) {
-			
-			final medal = NG.core.medals.getById(79390);
-			
-			if (!medal.unlocked) {
-				
-				var b = true;
-				for (v in infoMap) {
-					if (!v.viewed) {
-						b = false;
-						break;
-					}
-				}
-				
-				if (b) medal.sendUnlock();
-			}
-		}
+		checkViewed();
 		
 		rotate.cancel();
 		delay.resetCounter();
@@ -316,6 +312,48 @@ class CreatureState extends State {
 			volume : 1
 		}));
 	}
+	
+	function checkLinksViewed() {
+		
+		if (NG.core?.loggedIn) {
+			
+			final medal = NG.core.medals.getById(79391);
+			
+			if (!medal.unlocked) {
+				
+				var b = true;
+				for (v in infoMap) {
+					if (!v.linkViewed) {
+						b = false;
+						break;
+					}
+				}
+				
+				if (b) medal.sendUnlock();
+			}
+		}
+	}
+	
+	function checkViewed() {
+		
+		if (NG.core?.loggedIn) {
+			
+			final medal = NG.core.medals.getById(79390);
+			
+			if (!medal.unlocked) {
+				
+				var b = true;
+				for (v in infoMap) {
+					if (!v.viewed) {
+						b = false;
+						break;
+					}
+				}
+				
+				if (b) medal.sendUnlock();
+			}
+		}
+	}
 }
 
 @:structInit
@@ -325,4 +363,5 @@ private class CreatureInfo {
 	public final description:String;
 	public final profiles:Array<String>;
 	public var viewed:Bool;
+	public var linkViewed:Bool;
 }

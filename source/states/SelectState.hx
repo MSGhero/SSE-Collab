@@ -268,6 +268,7 @@ class SelectState extends State {
 		if (actions.justPressed.PAGE_L || actions.justPressed.PAGE_R) {
 			byType = !byType;
 			selection.anim.play(byType ? "5" : "0");
+			positionHighlight();
 			Command.queue(
 				PLAY(Res.load("sfx/NEXT.ogg").toSound(), {
 					type : SFX,
