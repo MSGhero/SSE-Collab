@@ -36,7 +36,7 @@ class LogoState extends State {
 		fg = new Bitmap(Res.load("logo/BACKGROUND 4.png").toTile());
 		
 		bg = new Bitmap(Res.load("logo/BACKGROUND 1.png").toTile());
-		bg.addShader(new UVScroll(0.1, 0));
+		bg.addShader(new UVScroll(0.05, 0)); // was 0.1
 		bg.tileWrap = true;
 	}
 	

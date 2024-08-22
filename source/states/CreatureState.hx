@@ -44,6 +44,8 @@ class CreatureState extends State {
 	var nameText:Text;
 	var text:Text;
 	var linkText:Text;
+	var ngLink:Proto;
+	var otherLink:Proto;
 	var infoMap:StringMap<CreatureInfo>;
 	
 	var linkInts:Array<Interactive>;
@@ -83,7 +85,8 @@ class CreatureState extends State {
 		
 		linkText = new Text(txtFnt);
 		linkText.text = "";
-		linkText.x = 1000; linkText.y = 890;
+		linkText.x = 1010; linkText.y = 870;
+		linkText.lineSpacing = 13;
 		
 		delay = Timing.delay(3, startRotation, false);
 		delay.repetitions = 0;
@@ -100,7 +103,7 @@ class CreatureState extends State {
 		
 		linkInts = [
 			{
-				shape : Rect.fromTL(1000, 890, 250, 48),
+				shape : Rect.fromTL(906, 863, 250, 48),
 				enabled : true,
 				onSelect : () -> {
 					final cr = infoMap.get(creatures[creatureIndex]);
@@ -113,7 +116,7 @@ class CreatureState extends State {
 				}
 			},
 			{
-				shape : Rect.fromTL(1000, 890 + 48, 250, 48),
+				shape : Rect.fromTL(906, 925, 250, 48),
 				enabled : true,
 				onSelect : () -> {
 					final cr = infoMap.get(creatures[creatureIndex]);
@@ -194,6 +197,16 @@ class CreatureState extends State {
 		creature.createAnim("creature", creatures[creatureIndex]);
 		creature.add(ecs);
 		
+		ngLink = new Proto(ecs.createEntity());
+		ngLink.createSprite(S2D, FG);
+		ngLink.createAnim("links", "newgrounds");
+		ngLink.add(ecs);
+		
+		otherLink = new Proto(ecs.createEntity());
+		otherLink.createSprite(S2D, FG);
+		otherLink.createAnim("links", "twitter");
+		otherLink.add(ecs);
+		
 		Command.queueMany(
 			ADD_TO(bgL, ParentID.S2D, LayerID.BG),
 			ADD_TO(bgR, ParentID.S2D, LayerID.BG),
@@ -220,6 +233,8 @@ class CreatureState extends State {
 		text.remove();
 		linkText.remove();
 		
+		ngLink.remove(ecs);
+		otherLink.remove(ecs);
 		trophy.remove(ecs);
 		creature.remove(ecs);
 		
@@ -245,7 +260,26 @@ class CreatureState extends State {
 		text.text = cr.description;
 		linkText.text = cr.artist;
 		
-		linkInts[1].enabled = cr.profiles.length > 1;
+		if (cr.profiles.length > 1) {
+			
+			linkInts[1].enabled = true;
+			otherLink.sprite.visible = true;
+			
+			if (cr.profiles[1].indexOf("deviantart") < 0) {
+				otherLink.anim.play("twitter");
+				linkText.text += "\nTwitter";
+			}
+			
+			else {
+				otherLink.anim.play("deviantart");
+				linkText.text += "\nDeviantArt";
+			}
+		}
+		
+		else {
+			linkInts[1].enabled = false;
+			otherLink.sprite.visible = false;
+		}
 		
 		creature.anim.play(name);
 		trophy.anim.play("default");
@@ -323,7 +357,7 @@ class CreatureState extends State {
 				
 				var b = true;
 				for (v in infoMap) {
-					if (!v.linkViewed) {
+					if (!v.linkViewed) { // needs to be all links, dummy out 2nd link for those who don't have it
 						b = false;
 						break;
 					}

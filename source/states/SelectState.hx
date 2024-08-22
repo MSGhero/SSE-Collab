@@ -35,6 +35,11 @@ class SelectState extends State {
 	final maxRows:Int = 4;
 	final maxCols:Int = 3;
 	
+	var oldType:Bool;
+	var oldRow:Int;
+	var oldCol:Int;
+	var oldPage:String;
+	
 	final selectionX:Int = 360;
 	final selectionY:Int = 94;
 	
@@ -179,9 +184,20 @@ class SelectState extends State {
 		ecs.setComponents(ecs.createEntity(), int);
 		buttons.push(int);
 		
+		oldType = false;
+		oldRow = oldCol = 0;
+		oldPage = "0";
+		
 		Command.queueMany(
 			REGISTER_TRIGGER("selFadeIn", onFadeIn),
-			REGISTER_TRIGGER("fullAlpha", s -> bg.alpha = selection.sprite.alpha = highlight.sprite.alpha = 1)
+			REGISTER_TRIGGER("fullAlpha", s -> {
+				bg.alpha = selection.sprite.alpha = highlight.sprite.alpha = 1;
+				row = oldRow;
+				col = oldCol;
+				byType = oldType;
+				selection.anim.play(oldPage);
+				positionHighlight();
+			})
 		);
 	}
 	
@@ -403,6 +419,10 @@ class SelectState extends State {
 		final name = byType ? namesByType[(Std.parseInt(selection.anim.name) - 5) * maxRows * maxCols + row * maxCols + col] : namesBySubspace[Std.parseInt(selection.anim.name) * maxRows * maxCols + row * maxCols + col];
 		
 		if (name != null) {
+			oldRow = row;
+			oldCol = col;
+			oldType = byType;
+			oldPage = selection.anim.name;
 			Command.queueMany(
 				PLAY(Res.load("sfx/SELECT.ogg").toSound(), {
 					type : SFX,

@@ -42,40 +42,35 @@ class GameState extends State {
 		
 		trace("game state");
 		
-		var tlX = 1462, tlY = 787;
-		
 		volDown = new Proto(ecs.createEntity());
 		volDown.createSprite(S2D, UI);
 		volDown.createAnim("volDown");
 		volDown.createInteractive({
-			shape : Rect.fromTL(tlX, tlY, 26, 25),
+			shape : Rect.fromTL(37, 72, 33, 31),
 			enabled : true,
 			onSelect : volumeDown
 		});
 		volDown.add(ecs);
-		volDown.sprite.x = tlX; volDown.sprite.y = tlY;
 		
 		volUp = new Proto(ecs.createEntity());
 		volUp.createSprite(S2D, UI);
 		volUp.createAnim("volUp");
 		volUp.createInteractive({
-			shape : Rect.fromTL(tlX + 141, tlY, 26, 25),
+			shape : Rect.fromTL(164, 65, 32, 31),
 			enabled : true,
 			onSelect : volumeUp
 		});
 		volUp.add(ecs);
-		volUp.sprite.x = tlX + 141; volUp.sprite.y = tlY;
 		
 		vol = new Proto(ecs.createEntity());
 		vol.createSprite(S2D, UI);
 		vol.createAnim("vol", "high");
 		vol.createInteractive({
-			shape : Rect.fromTL(tlX + 41, tlY - 28, 85, 80),
+			shape : Rect.fromTL(70, 38, 94, 85),
 			enabled : true,
 			onSelect : toggleMute
 		});
 		vol.add(ecs);
-		vol.sprite.x = tlX + 41; vol.sprite.y = tlY - 28;
 	}
 	
 	override public function exit() {
