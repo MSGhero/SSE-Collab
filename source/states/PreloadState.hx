@@ -99,18 +99,28 @@ class PreloadState extends State {
 					
 					trace("assets loaded");
 					
-					final t = haxe.Timer.stamp();
 					var sprites = new Spritesheet();
 					sprites.loadTexturePackerData(Res.load("sprites/sprites.png").toImage(), Res.load("sprites/sprites.txt").toText());
-					sprites.loadTexturePackerData(Res.load("sprites/creatures-0.png").toImage(), Res.load("sprites/creatures-0.txt").toText());
-					sprites.loadTexturePackerData(Res.load("sprites/creatures-1.png").toImage(), Res.load("sprites/creatures-1.txt").toText());
-					for (i in 1...6) sprites.loadSingle(Res.load('ui/preview/Subspace Page $i.png').toImage(), 'Subspace Page $i');
-					for (i in 1...8) sprites.loadSingle(Res.load('ui/preview/Type Page $i.png').toImage(), 'Type Page $i');
-					trace('asset crunching: ${haxe.Timer.stamp() - t} sec');
 					
-					Command.queue(ADD_SHEET(sprites, SheetID.SPRITES));
-					
-					onAssetsCrunch();
+					// i hate this but it keeps the preloader going
+					Command.queueMany(
+						ADD_UPDATER(entity, Timing.delay(0.01, () -> {
+							sprites.loadTexturePackerData(Res.load("sprites/creatures-0.png").toImage(), Res.load("sprites/creatures-0.txt").toText());
+						}, true)),
+						ADD_UPDATER(entity, Timing.delay(0.02, () -> {
+							sprites.loadTexturePackerData(Res.load("sprites/creatures-1.png").toImage(), Res.load("sprites/creatures-1.txt").toText());
+						}, true)),
+						ADD_UPDATER(entity, Timing.delay(0.03, () -> {
+							for (i in 1...6) sprites.loadSingle(Res.load('ui/preview/Subspace Page $i.png').toImage(), 'Subspace Page $i');
+						}, true)),
+						ADD_UPDATER(entity, Timing.delay(0.04, () -> {
+							for (i in 1...8) sprites.loadSingle(Res.load('ui/preview/Type Page $i.png').toImage(), 'Type Page $i');
+						}, true)),
+						ADD_UPDATER(entity, Timing.delay(0.05, () -> {
+							onAssetsCrunch();
+						}, true)),
+						ADD_SHEET(sprites, SheetID.SPRITES)
+					);
 				});
 			});
 		});

@@ -41,6 +41,8 @@ class DefaultMappings {
 		mapping[Action.PAGE_L] = [PadButtons.LB, PadButtons.LT];
 		mapping[Action.PAGE_R] = [PadButtons.RB, PadButtons.RT];
 		
+		mapping[Action.SELECT] = [PadButtons.A];
+		mapping[Action.DESELECT] = [PadButtons.B];
 		mapping[Action.LINK] = [PadButtons.Y];
 		
 		return mapping;

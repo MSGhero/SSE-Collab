@@ -14,5 +14,3 @@
 
 -hl export/hl/SSEC.hl
 -main mono.app.Main
--debug
---times

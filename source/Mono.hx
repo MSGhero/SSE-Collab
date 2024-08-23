@@ -109,8 +109,7 @@ class Mono extends AMono {
 			REGISTER_STATE(creature, CREATURE_STATE),
 			REGISTER_STATE(select, SELECT_STATE),
 			REGISTER_STATE(logo, LOGO_STATE),
-			ENTER(LOGO_STATE),
-			ENTER(GAME_STATE)
+			ENTER(LOGO_STATE)
 		);
 	}
 }

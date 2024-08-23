@@ -40,6 +40,8 @@ class SelectState extends State {
 	var oldCol:Int;
 	var oldPage:String;
 	
+	var ready:Bool;
+	
 	final selectionX:Int = 360;
 	final selectionY:Int = 94;
 	
@@ -191,7 +193,6 @@ class SelectState extends State {
 		Command.queueMany(
 			REGISTER_TRIGGER("selFadeIn", onFadeIn),
 			REGISTER_TRIGGER("fullAlpha", s -> {
-				bg.alpha = selection.sprite.alpha = highlight.sprite.alpha = 1;
 				row = oldRow;
 				col = oldCol;
 				byType = oldType;
@@ -232,8 +233,6 @@ class SelectState extends State {
 		
 		byType = false;
 		
-		bg.alpha = selection.sprite.alpha = highlight.sprite.alpha = 0;
-		
 		for (b in buttons) b.enabled = true;
 		
 		Command.queueMany(
@@ -257,6 +256,8 @@ class SelectState extends State {
 	}
 	
 	function handleInput(si:StringMap<Input>) {
+		
+		if (!ready) return;
 		
 		final actions = si.get(InputID.MENU);
 		
@@ -299,8 +300,10 @@ class SelectState extends State {
 		
 		else if (actions.justPressed.DESELECT) {
 			
-			final ft = new FloatTweener(0.25, 1, 0, f -> {
-				bg.alpha = selection.sprite.alpha = highlight.sprite.alpha = f;
+			ready = false;
+			
+			final ft = new FloatTweener(0.25, 0, 1, f -> {
+				GameState.BLACK.alpha = f;
 			});
 			
 			ft.onComplete = () -> {
@@ -308,6 +311,7 @@ class SelectState extends State {
 				Command.queueMany(
 					STOP_BY_TYPE(MUSIC),
 					EXIT(SELECT_STATE),
+					EXIT(GAME_STATE),
 					ENTER(LOGO_STATE)
 				);
 			};
@@ -324,9 +328,11 @@ class SelectState extends State {
 	
 	function onFadeIn(_) {
 		
-		final ft = new FloatTweener(0.25, 0, 1, f -> {
-			bg.alpha = selection.sprite.alpha = highlight.sprite.alpha = f;
+		final ft = new FloatTweener(0.25, 1, 0, f -> {
+			GameState.BLACK.alpha = f;
 		});
+		
+		ft.onComplete = () -> ready = true;
 		
 		Command.queue(ADD_UPDATER(entity, ft));
 	}

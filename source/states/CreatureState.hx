@@ -68,11 +68,38 @@ class CreatureState extends State {
 		bgR.y = 873;
 		arrows = new Bitmap(Res.load("ui/selection/Green Arrows.png").toTile());
 		
-		var fnt = Res.load("fonts/aotf.fnt").to(BitmapFont).toFont();
+		entity = ecs.createEntity();
+		
+		l0Ent = ecs.createEntity();
+		l1Ent = ecs.createEntity();
+		larrowEnt = ecs.createEntity();
+		rarrowEnt = ecs.createEntity();
+		
+		trophy = new Proto(ecs.createEntity());
+		trophy.createSprite(S2D, FG);
+		trophy.createAnim("trophy");
+		trophy.sprite.x = -120; trophy.sprite.y = 0;
+		trophy.sprite.setScale(2);
+		
+		creatureIndex = 0;
+		
+		creature = new Proto(ecs.createEntity());
+		creature.createSprite(S2D, FG);
+		creature.createAnim("creature", creatures[creatureIndex]);
+		
+		ngLink = new Proto(ecs.createEntity());
+		ngLink.createSprite(S2D, FG);
+		ngLink.createAnim("links", "newgrounds");
+		
+		otherLink = new Proto(ecs.createEntity());
+		otherLink.createSprite(S2D, FG);
+		otherLink.createAnim("links", "twitter");
+		
+		var fnt = Res.load("fonts/aotf_heavy.fnt").to(BitmapFont).toFont();
 		
 		nameText = new Text(fnt);
 		nameText.text = "Test text";
-		nameText.x = 1000; nameText.y = 82;
+		nameText.x = 986; nameText.y = 76;
 		nameText.maxWidth = 600;
 		nameText.textAlign = Center;
 		
@@ -103,27 +130,28 @@ class CreatureState extends State {
 		
 		linkInts = [
 			{
-				shape : Rect.fromTL(906, 863, 250, 48),
+				shape : Rect.fromTL(906, 863, 450, 48),
 				enabled : true,
 				onSelect : () -> {
 					final cr = infoMap.get(creatures[creatureIndex]);
 					final links = cr.profiles;
 					if (links.length > 0) {
 						System.openURL(links[0]);
-						cr.linkViewed = true;
+						cr.ngViewed = true;
+						if (links.length < 2) cr.otherViewed = true; // dummy out
 						checkLinksViewed();
 					}
 				}
 			},
 			{
-				shape : Rect.fromTL(906, 925, 250, 48),
+				shape : Rect.fromTL(906, 925, 450, 48),
 				enabled : true,
 				onSelect : () -> {
 					final cr = infoMap.get(creatures[creatureIndex]);
 					final links = cr.profiles;
 					if (links.length > 1) {
 						System.openURL(links[1]);
-						cr.linkViewed = true;
+						cr.otherViewed = true;
 						checkLinksViewed();
 					}
 				}
@@ -142,7 +170,11 @@ class CreatureState extends State {
 			onSelect : onRight
 		};
 		
-		Command.queue(REGISTER_TRIGGER("setCreature", onSetCreature));
+		Command.queueMany(
+			REGISTER_TRIGGER("setCreature", onSetCreature),
+			ADD_UPDATER(entity, delay),
+			ADD_UPDATER(entity, rotate)
+		);
 		
 		infoMap = new StringMap();
 		var json:Array<DynamicAccess<Dynamic>> = Json.parse(Res.load("specs/Subspace Text.json").toText());
@@ -153,7 +185,8 @@ class CreatureState extends State {
 				description : d.get("description"),
 				profiles : d.get("profile"),
 				viewed : false,
-				linkViewed : false
+				ngViewed : false,
+				otherViewed : false
 			});
 		}
 	}
@@ -171,13 +204,6 @@ class CreatureState extends State {
 		
 		trace("creature state");
 		
-		entity = ecs.createEntity();
-		
-		l0Ent = ecs.createEntity();
-		l1Ent = ecs.createEntity();
-		larrowEnt = ecs.createEntity();
-		rarrowEnt = ecs.createEntity();
-		
 		ecs.setComponents(l0Ent, linkInts[0]);
 		ecs.setComponents(l1Ent, linkInts[1]);
 		ecs.setComponents(larrowEnt, larrowInt);
@@ -185,26 +211,9 @@ class CreatureState extends State {
 		
 		creatureIndex = 0;
 		
-		trophy = new Proto(ecs.createEntity());
-		trophy.createSprite(S2D, FG);
-		trophy.createAnim("trophy");
 		trophy.add(ecs);
-		trophy.sprite.x = -120; trophy.sprite.y = 0;
-		trophy.sprite.setScale(2);
-		
-		creature = new Proto(ecs.createEntity());
-		creature.createSprite(S2D, FG);
-		creature.createAnim("creature", creatures[creatureIndex]);
 		creature.add(ecs);
-		
-		ngLink = new Proto(ecs.createEntity());
-		ngLink.createSprite(S2D, FG);
-		ngLink.createAnim("links", "newgrounds");
 		ngLink.add(ecs);
-		
-		otherLink = new Proto(ecs.createEntity());
-		otherLink.createSprite(S2D, FG);
-		otherLink.createAnim("links", "twitter");
 		otherLink.add(ecs);
 		
 		Command.queueMany(
@@ -217,9 +226,7 @@ class CreatureState extends State {
 			ADD_UPDATER(entity, Timing.float(0.1, 0, 1920, f -> {
 				bgL.x = f - 1920;
 				bgR.x = 1920 - f;
-			})),
-			ADD_UPDATER(entity, delay),
-			ADD_UPDATER(entity, rotate)
+			}))
 		);
 	}
 	
@@ -237,12 +244,6 @@ class CreatureState extends State {
 		otherLink.remove(ecs);
 		trophy.remove(ecs);
 		creature.remove(ecs);
-		
-		ecs.deleteEntity(entity);
-		ecs.deleteEntity(l0Ent);
-		ecs.deleteEntity(l1Ent);
-		ecs.deleteEntity(larrowEnt);
-		ecs.deleteEntity(rarrowEnt);
 	}
 	
 	override public function update() {
@@ -357,7 +358,7 @@ class CreatureState extends State {
 				
 				var b = true;
 				for (v in infoMap) {
-					if (!v.linkViewed) { // needs to be all links, dummy out 2nd link for those who don't have it
+					if (!v.ngViewed || !v.otherViewed) {
 						b = false;
 						break;
 					}
@@ -397,5 +398,6 @@ private class CreatureInfo {
 	public final description:String;
 	public final profiles:Array<String>;
 	public var viewed:Bool;
-	public var linkViewed:Bool;
+	public var ngViewed:Bool;
+	public var otherViewed:Bool;
 }

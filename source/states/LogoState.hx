@@ -55,6 +55,8 @@ class LogoState extends State {
 		
 		entity = ecs.createEntity();
 		
+		GameState.BLACK.alpha = 0;
+		
 		#if js
 		video = new Video();
 		videoEnded = false;
@@ -100,12 +102,13 @@ class LogoState extends State {
 		
 		if (videoEnded) {
 			
-			if (video != null) video.remove();
+			// if (video != null) video.remove(); // happens before others get added due to system order
 			
 			bg.alpha = fg.alpha = 0;
+			bm.alpha = 1;
 			
 			final ft = new FloatTweener(0.25, 0, 1, f -> {
-				bg.alpha = fg.alpha = bm.alpha = f;
+				bg.alpha = fg.alpha = f;
 			});
 			
 			ft.onComplete = () -> {
@@ -123,6 +126,7 @@ class LogoState extends State {
 				ADD_TO(bm, S2D, FG),
 				ADD_TO(bg, S2D, BG),
 				ADD_TO(fg, S2D, BG),
+				REMOVE_FROM_PARENT(video),
 				ADD_UPDATER(entity, ft)
 			);
 			
@@ -137,8 +141,8 @@ class LogoState extends State {
 				if (actions.justPressed.SELECT || actions.justPressed.MOUSE) {
 					awaitingInput = false;
 					
-					final ft = new FloatTweener(0.25, 1, 0, f -> {
-						bg.alpha = fg.alpha = bm.alpha = f;
+					final ft = new FloatTweener(0.25, 0, 1, f -> {
+						GameState.BLACK.alpha = f;
 					});
 					
 					ft.onComplete = () -> {
@@ -146,6 +150,7 @@ class LogoState extends State {
 							STOP_BY_TYPE(MUSIC),
 							EXIT(LOGO_STATE),
 							ENTER(SELECT_STATE),
+							ENTER(GAME_STATE),
 							PLAY(Res.load("music/Trophy_Gallery.ogg").toSound(), { // so that it continues playing during CR->SEL transition
 								type : MUSIC,
 								loop : true,
