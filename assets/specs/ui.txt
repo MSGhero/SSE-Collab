@@ -1,0 +1,40 @@
+selection
+	0 [Subspace Page 1]
+	1 [Subspace Page 2]
+	2 [Subspace Page 3]
+	3 [Subspace Page 4]
+	4 [Subspace Page 5]
+	5 [Type Page 1]
+	6 [Type Page 2]
+	7 [Type Page 3]
+	8 [Type Page 4]
+	9 [Type Page 5]
+	10 [Type Page 6]
+	11 [Type Page 7]
+highlight
+	tl [tl]
+	tm [tm]
+	tr [tr]
+	ml [ml]
+	m [m]
+	mr [mr]
+	bl [bl]
+	bm [bm]
+	br [br]
+	lr [lr]
+	tb [tb]
+volDown
+	[VOL_DOWN]
+volUp
+	[VOL_UP]
+vol
+	high [VOL_HIGH]
+	medium [VOL_MEDIUM]
+	low [VOL_LOW]
+	mute [VOL_MUTE]
+trophy
+	[trophy01-52] loop 20
+links
+	newgrounds [Newgrounds]
+	deviantart [Deviantart]
+	twitter [Twitter]
